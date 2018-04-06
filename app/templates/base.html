@@ -9,11 +9,28 @@
     </head>
     <body>
         <div style="width: 100%">
-            <span>текущий пользователь: {{ user.username }}</span>
-            <a style="margin-right: 15px;float: right;" href="/index">logout</a>
+            {% if user %}
+                <span>Текущий пользователь: {{ user.username }}</span>
+                <a style="margin-right: 15px;float: right;" href="{{ url_for('index') }}">Home</a>
+                <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Logout</a>
+            {% else %}
+                <span>Deployer</span>
+                <a style="margin-right: 15px;float: right;" href="{{ url_for('index') }}">Home</a>
+                <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
         </div>
         <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
         {% block content %}
         {% endblock %}
     </body>
 </html>
+
