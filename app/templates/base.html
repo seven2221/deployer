@@ -8,26 +8,16 @@
         {% endif %}
     </head>
     <body>
+
         <div style="width: 100%">
-            {% if user %}
-                <span>Текущий пользователь: {{ user.username }}</span>
-                <a style="margin-right: 15px;float: right;" href="{{ url_for('index') }}">Home</a>
-                <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Logout</a>
+{#            <span>Текущий пользователь: {{ user.username }}</span>#}
+            <a href="{{ url_for('index') }}">Home</a>
+            {% if current_user.is_anonymous %}
+            <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Login</a>
             {% else %}
-                <span>Welcome to deployer</span>
-                <a style="margin-right: 15px;float: right;" href="{{ url_for('index') }}">Home</a>
-                <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Login</a>
+            <a style="margin-right: 5px;float: right;" href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </div>
-{#        <div style="width: 100%;margin:0 !important"class="row">#}
-{#            {% if user %}#}
-{#                <span>Текущий пользователь: {{ user.username }}</span>#}
-{#                <a style="margin-right: 15px;" href="/index" class="pull-right">Home</a>#}
-{#                <a style="margin-right: 15px;" href="/login" class="pull-right">Logout</a>#}
-{#            {% else %}#}
-{#                <a style="margin-right: 15px;" href="/index" class="pull-right">Home</a>#}
-{#            {% endif %}#}
-{#        </div>#}
         <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
