@@ -1,0 +1,19 @@
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+<html>
+    <head>
+        {% if title %}
+        <title>Deployer - {{ title }}</title>
+        {% else %}
+        <title>Deployer</title>
+        {% endif %}
+    </head>
+    <body>
+        <div style="width: 100%">
+            <span>текущий пользователь: {{ user.username }}</span>
+            <a style="margin-right: 15px;float: right;" href="/index">logout</a>
+        </div>
+        <hr>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

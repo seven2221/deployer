@@ -1,0 +1,22 @@
+<table border="1">
+    <caption>Новые переменные</caption>
+    <tr>
+        <th>Имя</th>
+        <th>Компонент</th>
+        <th>Значение</th>
+    </tr>
+    {% for var in vars %}
+    <tr>
+        <td>{{ var }}</td>
+        <td>
+            <select>
+                <option value="sun-http-binding">sun-http-binding</option>
+                <option value="sun-jms-binding">sun-jms-binding</option>
+                <option value="sun-bpel-engine">sun-bpel-engine</option>
+            </select>
+        </td>
+        <td><input type="text" size="40"></td>
+        <td><input type="submit" value="Добавить"></td>
+    </tr>
+    {% endfor %}
+</table>
