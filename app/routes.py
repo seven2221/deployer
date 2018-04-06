@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db
+from app import app, selectors, db
 from app.forms import LoginForm, RegistrationForm
-from flask_login import current_user, login_user, logout_user, login_required
+from app.config import Config
 from app.models import User
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 
@@ -11,7 +12,7 @@ from werkzeug.urls import url_parse
 @app.route('/index')
 @login_required
 def index():
-    sborki = ['test', 'test', 'test']
+    sborki = selectors.match_selection(Config.path, "*zip")
     vars = ['123', '123', '123', '123']
     return render_template('index.html', title='Home', sborki=sborki, vars=vars)
 

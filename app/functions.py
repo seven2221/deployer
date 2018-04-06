@@ -1,47 +1,9 @@
 import zipfile
 import os
-import fnmatch
 import subprocess
 import logging.handlers
-import time
-from flask import Flask, render_template
+from app import Config
 
-path = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
-tempdir = path + "temp\\temp"
-
-# # логирование
-# logtime = time.strftime('%Y%m%d')
-# logging_file = (path + 'deploy_' + logtime + '.log')  # файл, в который пишем лог
-# formatter = logging.Formatter('[%(asctime)s][%(levelname)-4s] : %(message)s', datefmt='%d/%m/%Y %H:%M:%S')  # формат лога
-# handlers = \
-#     [
-#         logging.handlers.RotatingFileHandler
-#             (
-#                 logging_file,l
-#                 encoding='utf8',
-#                 maxBytes=100000,
-#                 backupCount=1
-#             ),
-#         logging.StreamHandler()
-#     ]
-# root_logger = logging.getLogger()
-# root_logger.setLevel(logging.DEBUG)
-# for handler in handlers:
-#     handler.setFormatter(formatter)
-#     handler.setLevel(logging.DEBUG)
-#     root_logger.addHandler(handler)
-
-
-class selectors:
-
-    @classmethod
-    def match_selection(cls, dir, match):
-        filelist = os.listdir(dir)
-        results = []
-        for name in filelist:
-            if fnmatch.fnmatch(name, match):
-                results.append(name)
-        yield results
 
 
 class old_variables:
@@ -82,8 +44,8 @@ class new_variables:
 
     @staticmethod
     def findvariables():
-        os.chdir(tempdir)
-        for jarFiles in selectors.match_selection(tempdir, "*jar"):
+        os.chdir(Config.tempdir)
+        for jarFiles in selectors.match_selection(Config.tempdir, "*jar"):
             for jarFile in jarFiles:
                 jar_with_variables = zipfile.ZipFile(jarFile, 'r')
                 jar_with_variables_filelist = jar_with_variables.infolist()
@@ -109,10 +71,10 @@ class new_variables:
 
     @staticmethod
     def main():
-        for zips in selectors.match_selection(path, "*zip"):
+        for zips in selectors.match_selection(Config.path, "*zip"):
             for zip in zips:
-                with zipfile.ZipFile(path + zip) as zipzip:
-                    zipzip.extractall(tempdir)
+                with zipfile.ZipFile(Config.path + zip) as zipzip:
+                    zipzip.extractall(Config.tempdir)
                     zipzip.close()
                     new_variables.findvariables()
                 # временное логирование
@@ -156,6 +118,6 @@ class main:
 
         main.add_configurations_to_gf(host)
 
-        for zips in selectors.match_selection(path, "*zip"):
+        for zips in selectors.match_selection(Config.path, "*zip"):
             for zip in zips:
              logging.debug("subprocess asadmin deploy " + zip)
