@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import _mysql
 basedir = os.path.abspath(os.path.dirname(__file__))
