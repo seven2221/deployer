@@ -1,5 +1,8 @@
 import os
 import fnmatch
+import zipfile
+import shutil
+from app.config import Config
 
 
 def match_selection(dir, match):
@@ -9,3 +12,15 @@ def match_selection(dir, match):
         if fnmatch.fnmatch(name, match):
             results.append(name)
     return results
+
+
+def unpack_zip(zip):
+    with zipfile.ZipFile(Config.path + zip) as archive:
+        archive.extractall(Config.tempdir)
+        archive.close()
+
+
+def deleter(dir):
+    shutil.rmtree(dir, ignore_errors=True)
+
+

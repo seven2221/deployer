@@ -2,8 +2,7 @@ import zipfile
 import os
 import subprocess
 import logging.handlers
-from app import Config
-
+from app import Config, selectors, logger
 
 
 class old_variables:
@@ -30,7 +29,6 @@ class old_variables:
                     configuration = str(line).replace("b\'", "").replace("\\r\\n'", "").replace(" ", "")
                     if configuration not in old_variables.allconfigs:
                         old_variables.allconfigs.append(configuration)
-                        #logging.debug("configuration = " + configuration)
 
     @staticmethod
     def main(host):
