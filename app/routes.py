@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
-from app import app, selectors, db
+from app import app, file_operations, db
 from app.forms import LoginForm, RegistrationForm
 from app.config import Config
 from app.models import User
@@ -12,16 +12,16 @@ from werkzeug.urls import url_parse
 @app.route('/index')
 @login_required
 def index():
-    sborki = selectors.match_selection(Config.path, "*zip")
-    vars = ['123', '123', '123', '123']
-    return render_template('index.html', title='Home', sborki=sborki, vars=vars)
+    sborki = file_operations.match_selection(Config.path, "*zip")
+    return render_template('index.html', title='Home', sborki=sborki)
 
 
 @app.route('/variables')
 @login_required
 def variables():
     variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
-    return render_template('variables.html', title='Home', vars=variables)
+    components = Config.GFcomponents
+    return render_template('variables.html', title='Home', vars=variables, comps=components)
 
 
 @app.route('/login', methods=['GET', 'POST'])

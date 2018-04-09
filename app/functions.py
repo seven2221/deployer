@@ -2,7 +2,7 @@ import zipfile
 import os
 import subprocess
 import logging.handlers
-from app import Config, selectors, logger
+from app import Config, file_operations, logger
 
 
 class old_variables:
@@ -13,7 +13,7 @@ class old_variables:
     @classmethod
     def find_variables(cls, host):
         for component in old_variables.components:
-            total_variables = subprocess.Popen(["asadmin", 'list-jbi-application-variables',"--component", component, "--host", host, "--port", "4848", "--user", "admin", "--passwordfile", "D:\\Glassfish22\\passfile"], stdout=subprocess.PIPE, shell=True)
+            total_variables = subprocess.Popen(["asadmin", 'list-jbi-application-variables', "--component", component, "--host", host, "--port", "4848", "--user", "admin", "--passwordfile", "D:\\Glassfish22\\passfile"], stdout=subprocess.PIPE, shell=True)
             for line in total_variables.stdout:
                 if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
                     variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")
@@ -23,7 +23,7 @@ class old_variables:
     @classmethod
     def find_configs(cls, host):
         for component in old_variables.components:
-            total_configs = subprocess.Popen(["asadmin", 'list-jbi-application-configurations',"--component", component, "--host", host, "--port", "4848", "--user", "admin", "--passwordfile", "D:\\Glassfish22\\passfile"], stdout=subprocess.PIPE, shell=True)
+            total_configs = subprocess.Popen(["asadmin", 'list-jbi-application-configurations', "--component", component, "--host", host, "--port", "4848", "--user", "admin", "--passwordfile", "D:\\Glassfish22\\passfile"], stdout=subprocess.PIPE, shell=True)
             for line in total_configs.stdout:
                 if "executed successfully." not in str(line) and "ERROR" not in str(line):
                     configuration = str(line).replace("b\'", "").replace("\\r\\n'", "").replace(" ", "")
@@ -43,7 +43,7 @@ class new_variables:
     @staticmethod
     def findvariables():
         os.chdir(Config.tempdir)
-        for jarFiles in selectors.match_selection(Config.tempdir, "*jar"):
+        for jarFiles in file_operations.match_selection(Config.tempdir, "*jar"):
             for jarFile in jarFiles:
                 jar_with_variables = zipfile.ZipFile(jarFile, 'r')
                 jar_with_variables_filelist = jar_with_variables.infolist()
@@ -69,7 +69,7 @@ class new_variables:
 
     @staticmethod
     def main():
-        for zips in selectors.match_selection(Config.path, "*zip"):
+        for zips in file_operations.match_selection(Config.path, "*zip"):
             for zip in zips:
                 with zipfile.ZipFile(Config.path + zip) as zipzip:
                     zipzip.extractall(Config.tempdir)
@@ -116,6 +116,6 @@ class main:
 
         main.add_configurations_to_gf(host)
 
-        for zips in selectors.match_selection(Config.path, "*zip"):
+        for zips in file_operations.match_selection(Config.path, "*zip"):
             for zip in zips:
              logging.debug("subprocess asadmin deploy " + zip)

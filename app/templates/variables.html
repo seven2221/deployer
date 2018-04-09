@@ -13,9 +13,9 @@
             <td>{{ var }}</td>
             <td>
                 <select>
-                    <option value="sun-http-binding">sun-http-binding</option>
-                    <option value="sun-jms-binding">sun-jms-binding</option>
-                    <option value="sun-bpel-engine">sun-bpel-engine</option>
+                     {% for comp in comps %}
+                         <option value="{{ comp }}">{{ comp }}</option>
+                     {% endfor %}
                 </select>
             </td>
             <td><input type="text" size="40"></td>
