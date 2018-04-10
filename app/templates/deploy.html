@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form>
+        <b>Сборки в директории:</b><Br>
+        {% for item in sborki %}
+        <input type="radio" name="sborka">{{ item }}<Br>
+        {% endfor %}
+    </form>
+    <input type="submit" value="Deploy">
+{% endblock %}
