@@ -8,8 +8,9 @@ class Config(object):
     GFcomponents = ['sun-bpel-engine', 'sun-http-binding', 'sun-jms-binding', 'sun-database-binding', 'sun-file-binding', 'sun-ftp-binding', 'sun-scheduler-binding']
 
     path = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
-    logpath = path + "logs_of_some_shit\\"
-    tempdir = path + "temp\\"
+    logpath = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\logs_of_some_shit\\"
+    tempdir = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\"
+
     passfile = "D:\\Glassfish22\\passfile"
     passfile_test = "D:\\Glassfish22\\passfile123"
 

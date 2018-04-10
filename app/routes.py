@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
-from app import app, file_operations, db
+from app import app, file_operations, db, gf_operations
 from app.forms import LoginForm, RegistrationForm
 from app.config import Config
 from app.models import User
+from app.gf_operations import check_variables
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -16,12 +17,21 @@ def index():
     return render_template('index.html', title='Home', sborki=sborki)
 
 
-@app.route('/variables')
+@app.route('/variables', methods=['GET', 'POST'])
 @login_required
 def variables():
     variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
+    # variables = check_variables.find_new_variables("ms-glass030")
     components = Config.GFcomponents
     return render_template('variables.html', title='Home', vars=variables, comps=components)
+
+
+@app.route('/undeploy', methods=['GET', 'POST'])
+@login_required
+def undeploy():
+    SAs = ['comverseProxy', 'APS', 'MAE', 'shit']
+    # SAs = gf_operations.check_SA("ms-glass030")
+    return render_template('undeploy.html', title='Home', SAs=SAs)
 
 
 @app.route('/login', methods=['GET', 'POST'])
