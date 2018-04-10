@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
-from deployer.app import app
-from deployer.app.config import Config
+from app import app
+from app.config import Config
 import os
 import time
 

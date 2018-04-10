@@ -1,7 +1,7 @@
 import subprocess
 import zipfile
-from deployer.app import file_operations
-from deployer.app.config import Config
+from app import file_operations
+from app.config import Config
 
 
 '''реквесты:

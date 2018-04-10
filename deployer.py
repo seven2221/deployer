@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from deployer.app import app
+from app import app
 
 app.run(host='10.127.242.199')
 
