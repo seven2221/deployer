@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
-from app import app, file_operations, db
-from app.forms import LoginForm, RegistrationForm
-from app.config import Config
-from app.models import User
+from deployer.app import app, file_operations, db
+from deployer.app.forms import LoginForm, RegistrationForm
+from deployer.app.config import Config
+from deployer.app.models import User
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 

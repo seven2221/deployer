@@ -2,7 +2,7 @@ import os
 import fnmatch
 import zipfile
 import shutil
-from app.config import Config
+from deployer.app.config import Config
 
 
 def match_selection(dir, match):

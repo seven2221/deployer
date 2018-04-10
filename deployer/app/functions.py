@@ -2,7 +2,7 @@ import zipfile
 import os
 import subprocess
 import logging.handlers
-from app import Config, file_operations, logger
+from deployer.app import Config, file_operations, logger
 
 
 class old_variables:
