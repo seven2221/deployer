@@ -13,9 +13,11 @@
 {#            <span>Текущий пользователь: {{ user.username }}</span>#}
             <a href="{{ url_for('index') }}">Home</a>
             {% if current_user.is_anonymous %}
-            <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Login</a>
+{#            <a style="margin-right: 5px;float: right;" href="{{ url_for('login') }}">Login</a>#}
+                <a href="{{ url_for('login') }}">Login</a>
             {% else %}
-            <a style="margin-right: 5px;float: right;" href="{{ url_for('logout') }}">Logout</a>
+{#            <a style="margin-right: 5px;float: right;" href="{{ url_for('logout') }}">Logout</a>#}
+                <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </div>
         <hr>

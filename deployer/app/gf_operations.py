@@ -25,7 +25,7 @@ class check_variables:
     def find_variables(cls, host):
         exists_variables = []
         for component in Config.GFcomponents:
-            for line in call_asadmin("list-jbi-application-variables", component, host, "4848", "D:\\Glassfish22\\passfile"):
+            for line in call_asadmin("list-jbi-application-variables", component, host, "4848", Config.passfile):
                 if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
                     variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")
                     if variable not in exists_variables:
@@ -45,7 +45,7 @@ class check_variables:
                             for line in opened_file:
                                 if filename.endswith('.bpel'):
                                     if "literal>" in str(line):
-                                        variable = str(line).split("literal")[1].replace(">${", "").replace("}</", "")  # нет желания возиться с регулярками. пускай будет костыль
+                                        variable = str(line).split("literal")[1].replace(">${", "").replace("}</", "")  # нет желания возиться с регулярками, временный костыль
                                         if variable not in zip_variables:
                                             zip_variables.append(variable)
                                 else:
@@ -53,6 +53,7 @@ class check_variables:
                                         variable = str(line).split("${")[1].split("}")[0]
                                         if variable not in zip_variables and variable != "HttpDefaultPort" and "\\" not in variable:  # len(variable) < 50:
                                             zip_variables.append(variable)
+        return zip_variables
                                     # if "<application-config" in str(line):
                                     #     configuration = str(line).split("\"")[3]
                                     #     if configuration not in configurations and configuration not in new_variables.variables:
