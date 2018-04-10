@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+    <form action="" method="post">
     <body>
+{#        {{ form.hidden_tag() }}#}
+{#        <p>#}
+{#            {{ form.host.label }}<br>#}
+{#            {{ form.host(size=15) }}<br>#}
+{#            {% for error in form.host.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#            {{ form.port.label }}<br>#}
+{#            {{ form.port(size=5) }}<br>#}
+{#            {% for error in form.port.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
         <form> <!--action="http://10.127.242.199:5000/">-->
             <b>Хост:</b><br>
             <input type="text" size="15">

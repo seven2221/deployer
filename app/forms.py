@@ -30,5 +30,5 @@ class RegistrationForm(FlaskForm):
 
 
 class HostForm(FlaskForm):
-    host = StringField('Host')
-    port = StringField('Port')
+    host = StringField('Host', validators=[DataRequired()])
+    port = StringField('Port', validators=[DataRequired()])

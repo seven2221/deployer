@@ -13,39 +13,10 @@ from werkzeug.urls import url_parse
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home')
-
-
-@app.route('/variables', methods=['GET', 'POST'])
-@login_required
-def variables():
-    variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
-    # variables = check_variables.find_new_variables("ms-glass030")
-    components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components)
-
-
-@app.route('/configurations', methods=['GET', 'POST'])
-@login_required
-def configurations():
-    return render_template('configurations.html', title='Configurations')
-
-
-@app.route('/undeploy', methods=['GET', 'POST'])
-@login_required
-def undeploy():
     form = HostForm
-    SAs = ['comverseProxy', 'APS', 'MAE', 'shit']
-    # SAs = gf_operations.check_SA("ms-glass030")
-    return render_template('undeploy.html', title='Undeploy', form=form, SAs=SAs)
-
-
-@app.route('/deploy', methods=['GET', 'POST'])
-@login_required
-def deploy():
-    sborki = file_operations.match_selection(Config.path, "*zip")
-    return render_template('deploy.html', title='Deploy', sborki=sborki)
-
+    # if form.validate_on_submit():
+    #     host =
+    return render_template('index.html', form=form, title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -69,6 +40,36 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.route('/variables', methods=['GET', 'POST'])
+@login_required
+def variables():
+    variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
+    # variables = check_variables.find_new_variables("ms-glass030")
+    components = Config.GFcomponents
+    return render_template('variables.html', title='Variables', vars=variables, comps=components)
+
+
+@app.route('/configurations', methods=['GET', 'POST'])
+@login_required
+def configurations():
+    return render_template('configurations.html', title='Configurations')
+
+
+@app.route('/undeploy', methods=['GET', 'POST'])
+@login_required
+def undeploy():
+    SAs = ['comverseProxy', 'APS', 'MAE', 'shit']
+    # SAs = gf_operations.check_SA("ms-glass030")
+    return render_template('undeploy.html', title='Undeploy', SAs=SAs)
+
+
+@app.route('/deploy', methods=['GET', 'POST'])
+@login_required
+def deploy():
+    sborki = file_operations.match_selection(Config.path, "*zip")
+    return render_template('deploy.html', title='Deploy', sborki=sborki)
 
 
 @app.route('/register', methods=['GET', 'POST'])

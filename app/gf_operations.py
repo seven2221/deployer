@@ -8,8 +8,11 @@ from app.config import Config
  list-jbi-application-variables
  list-jbi-application-configurations
  list-jbi-service-assemblies
+ update-jbi-application-variable
+ create-jbi-application-variable
  '''
-
+# asadmin create-jbi-application-variable --host ms-glass004 --port 4848 --user admin --passwordfile D:\Glassfish22\passfile123 --component sun-bpel-engine test_variable=testtest
+# asadmin create-jbi-application-variable --host hostname --port 4848 --user admin --passwordfile D:\Glassfish22\passfile --component sun-bpel-engine SubscriberSMConfigFileDir=D:\\Glassfish22\\domains\\domain1\\config\\SubscriberManagementService\\
 
 def call_asadmin(param, request, host, port, passfile):
     if param == "with_comp":
@@ -18,7 +21,7 @@ def call_asadmin(param, request, host, port, passfile):
             # print(str(callrequest.stdout))
     elif param == "without_comp":
         callrequest = subprocess.Popen(["asadmin ", request, "  --host  ", host, " --port ", port, " --user ", " admin ", " --passwordfile ", passfile], stdout=subprocess.PIPE, shell=True)
-        # print("asadmin  list-jbi-service-assemblies --host" + host + "--port 4848 --user admin --passwordfile D:\\Glassfish22\\passfile")
+        # print("asadmin  create-jbi-application-variable --component " + component + "--host" + host + "--port 4848 --user admin --passwordfile D:\\Glassfish22\\passfile")
         # print(str(callrequest.stdout))
     return callrequest.stdout
 
