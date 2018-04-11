@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from app import app
 
-app.run(host='10.127.242.199')
+app.run(host='10.127.242.208')
 
 
 # from app import app, db

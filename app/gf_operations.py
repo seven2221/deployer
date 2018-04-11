@@ -4,7 +4,8 @@ from app import file_operations
 from app.config import Config
 
 
-'''реквесты:
+'''
+реквесты:
  list-jbi-application-variables
  list-jbi-application-configurations
  list-jbi-service-assemblies
@@ -20,17 +21,15 @@ def call_asadmin(param, request, host, port, passfile):
             callrequest = subprocess.Popen(["asadmin", request, "--component", component, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
             # print(str(callrequest.stdout))
     elif param == "without_comp":
-        callrequest = subprocess.Popen(["asadmin ", request, "  --host  ", host, " --port ", port, " --user ", " admin ", " --passwordfile ", passfile], stdout=subprocess.PIPE, shell=True)
-        # print("asadmin  create-jbi-application-variable --component " + component + "--host" + host + "--port 4848 --user admin --passwordfile D:\\Glassfish22\\passfile")
-        # print(str(callrequest.stdout))
+        callrequest = subprocess.Popen(["asadmin", request, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
     return callrequest.stdout
 
 
-def check_SA(host):
+def check_SA(host, port):
     SAs = []
-    for line in call_asadmin("without_comp",  "list-jbi-service-assemblies", host, "4848", Config.passfile):
+    for line in call_asadmin("without_comp",  "list-jbi-service-assemblies", host, port, Config.passfile):
         if "executed successfully." not in str(line):
-            SA = str(line)
+            SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
             SAs.append(SA)
     return SAs
 
