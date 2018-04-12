@@ -13,11 +13,13 @@ from werkzeug.urls import url_parse
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    current_url = "http://" + Config.host + ":5000/index"
+    sborki = file_operations.match_selection(Config.path, "*zip")
     form = HostForm()
     if form.validate_on_submit():
         session['host'] = form.host.data
         session['port'] = form.port.data
-    return render_template('index.html', form=form, title='Home')
+    return render_template('index.html', form=form, title='Home', current_url=current_url, sborki=sborki)
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -2,7 +2,7 @@
 
 {% block content %}
     <table border="1">
-        <caption>Новые переменные ({{ host }})</caption>
+        <caption>Новые переменные ({{ session.get('host') }})</caption>
         <tr>
             <th>Имя</th>
             <th>Компонент</th>

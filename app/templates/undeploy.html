@@ -2,7 +2,7 @@
 
 {% block content %}
     <form>
-        <b>Service-Assemblies:</b><Br>
+        <b>Service-Assemblies ({{ session.get('host') }}):</b><Br>
         {% for SA in SAs %}
         <input type="radio" name="sborka">{{ SA }}<Br>
         {% endfor %}

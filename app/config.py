@@ -3,6 +3,9 @@ import os
 
 
 class Config(object):
+
+    host = "10.127.242.196"
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'glassfish123'
 
     GFcomponents = ['sun-bpel-engine', 'sun-http-binding', 'sun-jms-binding', 'sun-database-binding', 'sun-file-binding', 'sun-ftp-binding', 'sun-scheduler-binding']
