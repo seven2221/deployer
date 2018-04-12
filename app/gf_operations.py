@@ -19,8 +19,15 @@ from app.config import Config
 class asadmin_functions:
 
     @classmethod
-    def check_SA(cls):
+    def check_SA(cls, host, port):
         SAs = []
+        passfile = Config.passfile
+        asadmin_request = subprocess.Popen(["asadmin", "list-jbi-service-assemblies", "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
+        for line in asadmin_request.stdout:
+            if "executed successfully." not in str(line):
+                SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
+                SAs.append(SA)
+        return SAs
 
     @classmethod
     def get_all_variables(cls):
