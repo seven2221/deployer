@@ -16,6 +16,37 @@ from app.config import Config
 # asadmin create-jbi-application-variable --host hostname --port 4848 --user admin --passwordfile D:\Glassfish22\passfile --component sun-bpel-engine SubscriberSMConfigFileDir=D:\\Glassfish22\\domains\\domain1\\config\\SubscriberManagementService\\
 
 
+class asadmin_functions:
+
+    @classmethod
+    def check_SA(cls):
+        SAs = []
+
+    @classmethod
+    def get_all_variables(cls):
+        exists_variables = []
+
+    @classmethod
+    def update_variable(cls):
+        output = []
+
+    @classmethod
+    def create_variable(cls):
+        output = []
+
+    @classmethod
+    def get_all_configurations(cls):
+        exists_configurations = []
+
+    @classmethod
+    def update_configuration(cls):
+        output = []
+
+    @classmethod
+    def create_configuration(cls):
+        output = []
+
+
 def call_asadmin(param, request, host, port, passfile):
     if param == "with_comp":
         for component in Config.GFcomponents:

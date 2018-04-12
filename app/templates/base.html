@@ -12,6 +12,8 @@
         <div style="width: 100%">
 {#            <span>Текущий пользователь: {{ user.username }}</span>#}
             <a href="{{ url_for('index') }}">Home</a>
+
+{#            ##########  раскомментить если потребуется авторизация  ##########        #}
 {#            {% if current_user.is_anonymous %}#}
 {#                <a href="{{ url_for('login') }}">Login</a>#}
 {#            {% else %}#}
