@@ -2,6 +2,13 @@
 
 {% block content %}
     <form>
+        <b>Сборки в директории:</b><Br>
+        {% for item in sborki %}
+        <input type="radio" name="sborka">{{ item }}<Br>
+        {% endfor %}
+    </form>
+
+    <form>
         <b>тут будет какая-то херня</b><Br>
     </form>
 {% endblock %}

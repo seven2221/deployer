@@ -15,11 +15,11 @@ from app.config import Config
 # asadmin create-jbi-application-variable --host ms-glass004 --port 4848 --user admin --passwordfile D:\Glassfish22\passfile123 --component sun-bpel-engine test_variable=testtest
 # asadmin create-jbi-application-variable --host hostname --port 4848 --user admin --passwordfile D:\Glassfish22\passfile --component sun-bpel-engine SubscriberSMConfigFileDir=D:\\Glassfish22\\domains\\domain1\\config\\SubscriberManagementService\\
 
+
 def call_asadmin(param, request, host, port, passfile):
     if param == "with_comp":
         for component in Config.GFcomponents:
             callrequest = subprocess.Popen(["asadmin", request, "--component", component, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
-            # print(str(callrequest.stdout))
     elif param == "without_comp":
         callrequest = subprocess.Popen(["asadmin", request, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
     return callrequest.stdout
@@ -70,10 +70,6 @@ class check_variables:
     #                                 if variable not in zip_variables and variable != "HttpDefaultPort" and "\\" not in variable:  # len(variable) < 50:
     #                                     zip_variables.append(variable)
     #     return zip_variables
-                                    # if "<application-config" in str(line):
-                                    #     configuration = str(line).split("\"")[3]
-                                    #     if configuration not in configurations and configuration not in new_variables.variables:
-                                    #         configurations.append(configuration)
 
     @classmethod
     def find_zip_variables(cls):

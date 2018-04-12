@@ -30,6 +30,6 @@ class RegistrationForm(FlaskForm):
 
 
 class HostForm(FlaskForm):
-    host = StringField('Host', validators=[DataRequired()])
-    port = StringField('Port', validators=[DataRequired()])
+    host = StringField('Host')#, validators=[DataRequired()])
+    port = StringField('Port')#, validators=[DataRequired()])
     submit = SubmitField('ОК')

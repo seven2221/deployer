@@ -6,28 +6,21 @@
         <div style="display: table">
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.host.label }}</span>
-                {{ form.host(size=15) }}
-                {% for error in form.host.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{ form.host(size=20) }}
+{#                {% for error in form.host.errors %}#}
+{#                    <span style="color: red;">[{{ error }}]</span>#}
+{#                {% endfor %}#}
             </div>
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.port.label }}</span>
                 {{ form.port(size=15) }}
-                {% for error in form.port.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-                <span style="display: table-cell; margin-right: 15px">{{ form.submit() }}</span>
-{#                {{ form.submit() }}#}
+{#                {% for error in form.port.errors %}#}
+{#                    <span style="color: red;">[{{ error }}]</span>#}
+{#                {% endfor %}#}
+                <span>{{ form.submit() }}</span>
             </div>
+            <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('clean_session') }}'">Clean Session</button>
         </div>
-    </form>
-    <Br>
-    <form>
-        <b>Сборки в директории:</b><Br>
-        {% for item in sborki %}
-        <input type="radio" name="sborka">{{ item }}<Br>
-        {% endfor %}
     </form>
     <Br>
         <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('undeploy') }}'">Undeploy Menu</button>
