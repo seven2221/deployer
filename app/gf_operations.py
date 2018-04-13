@@ -30,7 +30,7 @@ def get_all_variables(host, port):
     exists_variables = []
     passfile = Config.passfile
     for component in Config.GFcomponents:
-        asadmin_command = subprocess.Popen(["asadmin", "list-jbi-application-variables", "--component", component, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
+        asadmin_command = subprocess.Popen(["asadmin", "list-jbi-application-variables", "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile, "--component", component], stdout=subprocess.PIPE, shell=True)
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
                 variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")
@@ -41,13 +41,22 @@ def get_all_variables(host, port):
 
 def update_variable(host, port, component, variable, value):
     passfile = Config.passfile
-    ####### переписать ##############
-    asadmin_command = subprocess.Popen(["asadmin", "update-jbi-application-variable", "--component", component, "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile], stdout=subprocess.PIPE, shell=True)
+    asadmin_command = subprocess.Popen(["asadmin", "update-jbi-application-variable", "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile, "--component", component, variable, "=", value], stdout=subprocess.PIPE, shell=True)
+    for line in asadmin_command.stdout:
+        if "executed successfully" in str(line):
+            return "Success"
+        else:
+            return "Failure"
 
 
-def create_variable(cls):
-    output = []
+def create_variable(host, port, component, variable, value):
     passfile = Config.passfile
+    asadmin_command = subprocess.Popen(["asadmin", "create-jbi-application-variable", "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile, "--component", component, variable + "=" + value], stdout=subprocess.PIPE, shell=True)
+    for line in asadmin_command.stdout:
+        if "executed successfully" in str(line):
+            return "Success"
+        else:
+            return "Failure"
 
 
 def get_all_configurations(cls):
