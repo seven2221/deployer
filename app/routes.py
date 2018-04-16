@@ -86,11 +86,11 @@ def configurations():
     return render_template('configurations.html', title='Configurations',  sborki=sborki)
 
 
-@app.route('/undeploy', methods=['GET', 'POST'])
+@app.route('/SA_menu', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def undeploy():
+def SA_menu():
     SAs = gf_operations.check_SA(session.get('host'), session.get('port'))
-    return render_template('undeploy.html', title='Undeploy', SAs=SAs)
+    return render_template('SA_menu.html', title='SA_menu', SAs=SAs)
 
 
 @app.route('/deploy', methods=['GET', 'POST'])

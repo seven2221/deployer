@@ -25,8 +25,8 @@
         </div>
     </form>
     <Br>
-        <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('undeploy') }}'">Undeploy Menu</button>
-        <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('deploy') }}'">Deploy Menu</button>
-        <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('variables') }}'">Change variables</button>
-        <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('configurations') }}'">Change configurations</button>
+    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('SA_menu') }}'">Service-Assemblies Menu</button>
+{#    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('deploy') }}'">Deploy Menu</button>#}
+    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('variables') }}'">Change variables</button>
+    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('configurations') }}'">Change configurations</button>
 {% endblock %}

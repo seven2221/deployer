@@ -1,5 +1,4 @@
 import subprocess
-import zipfile
 from app.config import Config
 
 
@@ -13,7 +12,7 @@ from app.config import Config
  '''
 # asadmin create-jbi-application-variable --host ms-glass004 --port 4848 --user admin --passwordfile D:\Glassfish22\passfile123 --component sun-bpel-engine test_variable=testtest
 # asadmin create-jbi-application-variable --host hostname --port 4848 --user admin --passwordfile D:\Glassfish22\passfile --component sun-bpel-engine SubscriberSMConfigFileDir=D:\\Glassfish22\\domains\\domain1\\config\\SubscriberManagementService\\
-
+# asadmin shut-down-jbi-service-assembly --user admin --host ms-glass010 --port 4848 --passwordfile D:\GlassFish22\passfile SharedDataWeb
 
 def check_SA(host, port):
     SAs = []
@@ -24,6 +23,15 @@ def check_SA(host, port):
             SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
             SAs.append(SA)
     return SAs
+
+
+def undeploy_SA(host, port, SA):
+    out = []
+    passfile = Config.passfile
+    asadmin_command = subprocess.Popen(["asadmin", "undeploy-jbi-service-assembly", "--host", host, "--port", port, "--user", "admin", "--passwordfile", passfile, "--target", SA], stdout=subprocess.PIPE, shell=True)
+
+def deploy_SA(host, port, zip):
+    out = []
 
 
 def get_all_variables(host, port):
@@ -46,7 +54,7 @@ def update_variable(host, port, component, variable, value):
         if "executed successfully" in str(line):
             return "Success"
         else:
-            return "Failure"
+            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
 
 
 def create_variable(host, port, component, variable, value):
@@ -56,7 +64,7 @@ def create_variable(host, port, component, variable, value):
         if "executed successfully" in str(line):
             return "Success"
         else:
-            return "Failure"
+            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
 
 
 def get_all_configurations(cls):

@@ -54,7 +54,7 @@ class check_variables:
     @classmethod
     def find_zip_variables(cls):
         zip_variables = []
-        for jarFile in gf_operations.file_operations.match_selection(Config.tempdir, "*jar"):
+        for jarFile in file_operations.match_selection(Config.tempdir, "*jar"):
             jarfile = zipfile.ZipFile(Config.tempdir + jarFile, 'r')
             filelist = jarfile.infolist()
             for file in filelist:
@@ -63,8 +63,7 @@ class check_variables:
                 for line in opened_file:
                     if filename.endswith('.bpel'):
                         if "literal>" in str(line):
-                            variable = str(line).split("literal")[1].replace(">${", "").replace("}</",
-                                                                                                "")  # нет желания возиться с регулярками, временный костыль
+                            variable = str(line).split("literal")[1].replace(">${", "").replace("}</","")  # нет желания возиться с регулярками, временный костыль
                             if variable not in zip_variables:
                                 zip_variables.append(variable)
                     else:
