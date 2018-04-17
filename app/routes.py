@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, session, redirect, url_for
-from app import app, file_operations, gf_operations
+from app import app, file_operations, gf_operations, gf_variables
 from app.forms import HostForm
 from app.config import Config
 
@@ -73,8 +73,9 @@ def index():
 def variables():
     sborki = file_operations.match_selection(Config.path, "*zip")
     host = session.get('host')
-    variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
-    # variables = check_variables.find_new_variables("ms-glass030")
+    port = session.get('port')
+    # variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
+    variables = gf_variables.find_new_variables(host, port)
     components = Config.GFcomponents
     return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki)
 

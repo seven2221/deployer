@@ -97,7 +97,6 @@ class new_variables:
                     filename = file.filename
                     with zipfile.ZipFile(jarFile) as jar_to_open:
                         with jar_to_open.open(filename) as opened_file:
-
                             for line in opened_file:
                                 if filename.endswith('.bpel'):
                                     if "literal>" in str(line):
@@ -170,39 +169,39 @@ class main:
 
 
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-  return render_template('template.html')
-
-
-@app.route('/my-link/')
-def my_link():
-    name = "Alan"
-    print('I got clicked!')
-    return render_template('test.html', name=name)
-
-
-@app.route('/deployer/')
-def call_deployer():
-    sborki = list(selectors.match_selection(path, "*zip"))[0]
-    new_variables.main()
-    vars = new_variables.variables
-    print('call deployer')
-    return render_template('deployer.html', vars=vars, sborki=sborki)
-
-
-@app.route('/deployer/variables')
-def call_deployer_variables():
-    new_variables.main()
-    vars = new_variables.variables
-    print('call deployer')
-    return render_template('variables.html', vars=vars)
-
-
-if __name__ == '__main__':
-    app.run(host='10.127.242.206', debug=True)
+# app = Flask(__name__)
+#
+# @app.route('/')
+# def index():
+#   return render_template('template.html')
+#
+#
+# @app.route('/my-link/')
+# def my_link():
+#     name = "Alan"
+#     print('I got clicked!')
+#     return render_template('test.html', name=name)
+#
+#
+# @app.route('/deployer/')
+# def call_deployer():
+#     sborki = list(selectors.match_selection(path, "*zip"))[0]
+#     new_variables.main()
+#     vars = new_variables.variables
+#     print('call deployer')
+#     return render_template('deployer.html', vars=vars, sborki=sborki)
+#
+#
+# @app.route('/deployer/variables')
+# def call_deployer_variables():
+#     new_variables.main()
+#     vars = new_variables.variables
+#     print('call deployer')
+#     return render_template('variables.html', vars=vars)
+#
+#
+# if __name__ == '__main__':
+#     app.run(host='10.127.242.206', debug=True)
 
 
 #main.deployer()
@@ -212,3 +211,4 @@ logging.debug("Deploying of " + "(name.version) " + " on " + host + " is finishe
 
 
 
+print(new_variables.main())

@@ -5,8 +5,8 @@ import shutil
 from app.config import Config
 
 
-def match_selection(dir, match):
-    filelist = os.listdir(dir)
+def match_selection(path, match):
+    filelist = os.listdir(path)
     results = []
     for name in filelist:
         if fnmatch.fnmatch(name, match):
@@ -15,7 +15,7 @@ def match_selection(dir, match):
 
 
 def unpack_zip(zip):
-    with zipfile.ZipFile(Config.path + zip) as archive:
+    with zipfile.ZipFile(Config.zippath + zip) as archive:
         archive.extractall(Config.tempdir)
         archive.close()
 

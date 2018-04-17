@@ -4,13 +4,14 @@ import os
 
 class Config(object):
 
-    host = "10.127.242.196"
+    host = "10.127.242.215"
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'glassfish123'
 
     GFcomponents = ['sun-bpel-engine', 'sun-http-binding', 'sun-jms-binding', 'sun-database-binding', 'sun-file-binding', 'sun-ftp-binding', 'sun-scheduler-binding']
 
     path = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
+    zippath = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
     logpath = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\logs_of_some_shit\\"
     tempdir = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\"
 
