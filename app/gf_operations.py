@@ -37,7 +37,6 @@ def check_SA(host, port):
 
 
 def undeploy_SA(host, port, SA):
-    out = []
     passfile = Config.passfile
     asadmin_command = subprocess.Popen\
         (
@@ -50,6 +49,11 @@ def undeploy_SA(host, port, SA):
                 "--target", SA
             ], stdout=subprocess.PIPE, shell=True
         )
+    for line in asadmin_command.stdout:
+        if "executed successfully" in str(line):
+            return "Success"
+        else:
+            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
 
 
 def deploy_SA(host, port, zip):
