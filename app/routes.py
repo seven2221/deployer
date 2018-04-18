@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, session, redirect, url_for
 from app import app, file_operations, gf_operations, gf_variables
-from app.forms import HostForm
+from app.forms import HostForm, VariablesForm
 from app.config import Config
 
 
@@ -71,13 +71,13 @@ def index():
 @app.route('/variables', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def variables():
+    form = VariablesForm()
     sborki = file_operations.match_selection(Config.path, "*zip")
     host = session.get('host')
     port = session.get('port')
-    # variables = ['one_shit', 'some_shit', 'another_shit', 'more_shit']
     variables = gf_variables.find_new_variables(host, port)
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki)
+    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki, form=form)
 
 
 @app.route('/configurations', methods=['GET', 'POST'])

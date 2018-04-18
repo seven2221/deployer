@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, RadioField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -33,3 +33,7 @@ class HostForm(FlaskForm):
     host = StringField('Host')#, validators=[DataRequired()])
     port = StringField('Port')#, validators=[DataRequired()])
     submit = SubmitField('ОК')
+
+
+class VariablesForm(FlaskForm):
+    variable = RadioField('Label', choices=[('value', 'description'), ('value_two', 'whatever')])
