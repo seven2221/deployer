@@ -1,20 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form>
-        <b>Сборки в директории:</b><Br>
-        {% for item in sborki %}
-        <input type="radio" name="sborka">{{ item }}<Br>
-        {% endfor %}
-        <input type="submit" value="Deploy">
-    </form>
-
-{#    <form method="post">#}
-{#        {{ form.hidden_tag() }}#}
-{#        {{ form.example }}#}
-{#        <input type="submit">#}
-{#    </form>#}
-
     <table border="1" cellpadding="4" cellspacing="0">
         <caption style="text-align: center; caption-side: top;">Новые переменные ({{ session.get('host') }})</caption>
         <tr>

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, request
 from app import app, file_operations, gf_operations, gf_variables
-from app.forms import HostForm, VariablesForm
+from app.forms import HostForm, ZipForm
 from app.config import Config
 
 
 ##########  раскомментить если потребуется авторизация  ##########
-# from flask import flash, request
+# from flask import flash
 # from app import db
 # from app.forms import LoginForm, RegistrationForm
 # from app.models import User
@@ -68,16 +68,23 @@ def index():
 #     return redirect(url_for('login'))
 
 
+@app.route('/check_prepare', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def check_prepare():
+    form = ZipForm()
+    sborki = file_operations.match_selection(Config.path, "*zip")
+    return render_template('check_prepare.html', title='Variables', sborki=sborki, form=form)
+
+
 @app.route('/variables', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def variables():
-    form = VariablesForm()
     sborki = file_operations.match_selection(Config.path, "*zip")
     host = session.get('host')
     port = session.get('port')
     variables = gf_variables.find_new_variables(host, port)
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki, form=form)
+    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki)
 
 
 @app.route('/configurations', methods=['GET', 'POST'])
@@ -108,4 +115,18 @@ def clean_session():
         session.pop(key)
     return redirect(url_for('index'))
 
+
+@app.route('/unpack', methods=['POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def unpack():
+    zip_to_unpack = request.form['zip_to_unpack']
+    file_operations.unpack_zip(zip_to_unpack)
+    return redirect(url_for('check_prepare'))
+
+
+@app.route('/clear_temp', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def clear_temp():
+    file_operations.deleter(Config.tempdir)
+    return redirect(url_for('check_prepare'))
 

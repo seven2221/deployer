@@ -35,5 +35,5 @@ class HostForm(FlaskForm):
     submit = SubmitField('ОК')
 
 
-class VariablesForm(FlaskForm):
-    variable = RadioField('Label', choices=[('value', 'description'), ('value_two', 'whatever')])
+class ZipForm(FlaskForm):
+    zip_to_unpack = RadioField('Label', choices=[('value', 'description'), ('value_two', 'whatever')])
