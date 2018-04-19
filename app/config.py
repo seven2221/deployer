@@ -16,7 +16,8 @@ class Config(object):
     tempdir = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\"
 
     passfile = "D:\\Glassfish22\\passfile"
-    passfile_test = "D:\\Glassfish22\\passfile123"
+    passfile_test1 = "D:\\Glassfish22\\passfile_test"
+    passfile_test2 = "D:\\Glassfish22\\passfile_test2"
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://glassfish:kem7Hdowm8d@ms-glass012/deployer'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

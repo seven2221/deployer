@@ -1,9 +1,9 @@
 import subprocess
 from app.config import Config
+from flask import session
 
 
 '''
-реквесты:
  list-jbi-application-variables
  list-jbi-application-configurations
  list-jbi-service-assemblies
@@ -16,9 +16,23 @@ from app.config import Config
  '''
 
 
+def choose_passfile():
+    host = session.get('host')
+    port = session.get('port')
+    testhosts = ['ms-glass004', 'ms-glass006', 'ms-glass018', 'dr-glass016']
+    if host == "ms-glass004" and port == "7000":
+        passfile = Config.passfile_test2
+    else:
+        if host in testhosts:
+            passfile = Config.passfile_test1
+        else:
+            passfile = Config.passfile
+    return passfile
+
+
 def check_SA(host, port):
     SAs = []
-    passfile = Config.passfile
+    passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
@@ -37,7 +51,7 @@ def check_SA(host, port):
 
 
 def undeploy_SA(host, port, SA):
-    passfile = Config.passfile
+    passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
@@ -62,7 +76,7 @@ def deploy_SA(host, port, zip):
 
 def get_all_variables(host, port):
     exists_variables = []
-    passfile = Config.passfile
+    passfile = choose_passfile()
     for component in Config.GFcomponents:
         asadmin_command = subprocess.Popen\
             (
@@ -84,7 +98,7 @@ def get_all_variables(host, port):
 
 
 def update_variable(host, port, component, variable, value):
-    passfile = Config.passfile
+    passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
@@ -105,7 +119,7 @@ def update_variable(host, port, component, variable, value):
 
 
 def create_variable(host, port, component, variable, value):
-    passfile = Config.passfile
+    passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
@@ -127,15 +141,15 @@ def create_variable(host, port, component, variable, value):
 
 def get_all_configurations(cls):
     exists_configurations = []
-    passfile = Config.passfile
+    passfile = choose_passfile()
 
 
 def update_configuration(cls):
     output = []
-    passfile = Config.passfile
+    passfile = choose_passfile()
 
 
 def create_configuration(cls):
     output = []
-    passfile = Config.passfile
+    passfile = choose_passfile()
 

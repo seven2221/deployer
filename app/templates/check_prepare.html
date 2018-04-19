@@ -2,18 +2,18 @@
 
 {% block content %}
 
+<button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('clear_temp') }}'"> Clear temp dir </button><br/><br/>
+
 <fieldset>
-    <legend>Выбор сборки для проверки:</legend>
-        <form action={{ url_for('unpack') }} method="post">
-            {{ form.hidden_tag() }}
-            {% for item in sborki %}
-                <input type="radio" name="zip_to_unpack" id="{{ item }}" value="{{ item }}" /> {{ item }}  <br/>
-            {% endfor %}
-            <input type="submit" value=" Unpack chosen ">
-        </form>
-
-        <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('clear_temp') }}'"> Clear temp dir </button><br/><br/>
-
+    <legend>Выбор сборки для проверки новых переменных:</legend>
+    <form action={{ url_for('unpack') }} method="post">
+        {{ form.hidden_tag() }}
+        {% for item in sborki %}
+            <input type="radio" name="zip_to_unpack" id="{{ item }}" value="{{ item }}" /> {{ item }}  <br/>
+        {% endfor %}
+        <br/>
+        <input type="submit" value=" Unpack chosen ">
+    </form>
 </fieldset>
 
     <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('variables') }}'"> Check for new variables </button>
