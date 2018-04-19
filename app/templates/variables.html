@@ -2,27 +2,52 @@
 
 {% block content %}
     <table border="1" cellpadding="4" cellspacing="0">
+
         <caption style="text-align: center; caption-side: top;">Новые переменные ({{ session.get('host') }})</caption>
+
         <tr>
-            <th>Имя</th>
-            <th>Компонент</th>
-            <th>Значение</th>
+            <th>Variable</th>
+            <th>Component</th>
+            <th>Value</th>
         </tr>
+
         {% for var in vars %}
-        <tr>
-            <td>{{ var }}</td>
-            <td>
-                <select>
-                     {% for comp in comps %}
-                         <option value="{{ comp }}">{{ comp }}</option>
-                     {% endfor %}
-                </select>
-            </td>
-            <td><input type="text" size="40"></td>
-            <td><input type="submit" value="Добавить"></td>
-        </tr>
+            <form action={{ url_for('create_variable') }} method="post">
+                <tr>
+                    <td>
+                        <span>{{ var }}</span>
+                        <input name="variable" style="display:none" value="{{ var }}">
+                    </td>
+                    <td>
+                        <select name="component" class="selectpicker form-control">
+                            {% for comp in comps %}
+                                <option  value="{{ comp }}"> {{ comp }} </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input name="value" type="text" size="40"></td>
+                    <td><input type="submit" value="Добавить"></td>
+                </tr>
+            </form>
         {% endfor %}
+
+        <form action={{ url_for('create_variable') }} method="post">
+            <tr>
+                <td><input name="variable" type="text" size="40"></td>
+                <td>
+                    <select name="component" class="selectpicker form-control">
+                        {% for comp in comps %}
+                            <option  value="{{ comp }}"> {{ comp }} </option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><input name="value" type="text" size="40"></td>
+                <td><input type="submit" value="Добавить"></td>
+            </tr>
+        </form>
+
     </table>
     <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Back </button>
+    <span>   Last result is: {{ result }}</span>
 
 {% endblock %}

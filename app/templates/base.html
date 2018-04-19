@@ -9,7 +9,8 @@
         {% endif %}
     </head>
     <body>
-        <span>Current host is {{ session.get('host') }}:{{ session.get('port') }}</span>
+        <span>Current host is {{ session.get('host') }}:{{ session.get('port') }}</span><br>
+        <span>Last unpacked zip: {{ session.get('zip') }}</span>
         <div style="width: 100%">
 {#            <span>Текущий пользователь: {{ user.username }}</span>#}
             <a href="{{ url_for('index') }}">Home</a>

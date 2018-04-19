@@ -30,15 +30,15 @@ def choose_passfile():
     return passfile
 
 
-def check_SA(host, port):
+def check_SA():
     SAs = []
     passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
                 "asadmin", "list-jbi-service-assemblies",
-                "--host", host,
-                "--port", port,
+                "--host", session.get('host'),
+                "--port", session.get('port'),
                 "--user", "admin",
                 "--passwordfile", passfile
             ], stdout=subprocess.PIPE, shell=True
@@ -50,14 +50,14 @@ def check_SA(host, port):
     return SAs
 
 
-def undeploy_SA(host, port, SA):
+def undeploy_SA(SA):
     passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
                 "asadmin", "undeploy-jbi-service-assembly",
-                "--host", host,
-                "--port", port,
+                "--host", session.get('host'),
+                "--port", session.get('port'),
                 "--user", "admin",
                 "--passwordfile", passfile,
                 "--target", SA
@@ -74,7 +74,7 @@ def deploy_SA(host, port, zip):
     out = []
 
 
-def get_all_variables(host, port):
+def get_all_variables():
     exists_variables = []
     passfile = choose_passfile()
     for component in Config.GFcomponents:
@@ -82,8 +82,8 @@ def get_all_variables(host, port):
             (
                 [
                     "asadmin", "list-jbi-application-variables",
-                    "--host", host,
-                    "--port", port,
+                    "--host", session.get('host'),
+                    "--port", session.get('port'),
                     "--user", "admin",
                     "--passwordfile", passfile,
                     "--component", component
@@ -97,14 +97,15 @@ def get_all_variables(host, port):
         return exists_variables
 
 
-def update_variable(host, port, component, variable, value):
+def update_variable(component, variable, value):
     passfile = choose_passfile()
+    result = ""
     asadmin_command = subprocess.Popen\
         (
             [
                 "asadmin", "update-jbi-application-variable",
-                "--host", host,
-                "--port", port,
+                "--host", session.get('host'),
+                "--port", session.get('port'),
                 "--user", "admin",
                 "--passwordfile", passfile,
                 "--component", component,
@@ -113,19 +114,21 @@ def update_variable(host, port, component, variable, value):
         )
     for line in asadmin_command.stdout:
         if "executed successfully" in str(line):
-            return "Success"
+            result = "Success"
         else:
-            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+    return result
 
 
-def create_variable(host, port, component, variable, value):
+def create_variable(component, variable, value):
+    result = ""
     passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
             [
                 "asadmin", "create-jbi-application-variable",
-                "--host", host,
-                "--port", port,
+                "--host", session.get('host'),
+                "--port", session.get('port'),
                 "--user", "admin",
                 "--passwordfile", passfile,
                 "--component", component,
@@ -133,10 +136,11 @@ def create_variable(host, port, component, variable, value):
             ], stdout=subprocess.PIPE, shell=True
         )
     for line in asadmin_command.stdout:
-        if "executed successfully" in str(line):
-            return "Success"
-        else:
-            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
+            if "executed successfully" in str(line):
+                result = "Success"
+            else:
+                result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
+    return result
 
 
 def get_all_configurations(cls):

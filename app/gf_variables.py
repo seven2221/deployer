@@ -24,9 +24,9 @@ def find_variables_in_zip():
     return zip_variables
 
 
-def find_new_variables(host, port):
+def find_new_variables():
     new_variables = []
-    exists_variables = gf_operations.get_all_variables(host, port)
+    exists_variables = gf_operations.get_all_variables()
     zip_variables = find_variables_in_zip()
     for variable in zip_variables:
         if variable not in exists_variables:

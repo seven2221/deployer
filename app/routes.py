@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from flask import render_template, session, redirect, url_for, request
 from app import app, file_operations, gf_operations, gf_variables
 from app.forms import HostForm, ZipForm
@@ -68,6 +69,10 @@ def index():
 #     return redirect(url_for('login'))
 
 
+class result(object):
+    result = ""
+
+
 @app.route('/check_prepare', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def check_prepare():
@@ -81,10 +86,9 @@ def check_prepare():
 def variables():
     sborki = file_operations.match_selection(Config.path, "*zip")
     host = session.get('host')
-    port = session.get('port')
-    variables = gf_variables.find_new_variables(host, port)
+    variables = gf_variables.find_new_variables()
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki)
+    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki,result=result.result)
 
 
 @app.route('/configurations', methods=['GET', 'POST'])
@@ -97,7 +101,7 @@ def configurations():
 @app.route('/SA_menu', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def SA_menu():
-    SAs = gf_operations.check_SA(session.get('host'), session.get('port'))
+    SAs = gf_operations.check_SA()
     return render_template('SA_menu.html', title='SA_menu', SAs=SAs)
 
 
@@ -111,8 +115,8 @@ def deploy():
 @app.route('/clean_session')
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def clean_session():
-    for key in session.keys():
-        session.pop(key)
+    session.pop('host')
+    session.pop('port')
     return redirect(url_for('index'))
 
 
@@ -120,6 +124,7 @@ def clean_session():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def unpack():
     zip_to_unpack = request.form['zip_to_unpack']
+    session['zip'] = zip_to_unpack
     file_operations.unpack_zip(zip_to_unpack)
     return redirect(url_for('check_prepare'))
 
@@ -127,6 +132,16 @@ def unpack():
 @app.route('/clear_temp', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def clear_temp():
+    session.pop('zip')
     file_operations.deleter(Config.tempdir)
     return redirect(url_for('check_prepare'))
 
+
+@app.route('/create_variable', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def create_variable():
+    component = request.form['component']
+    variable = request.form['variable']
+    value = request.form['value']
+    result.result = gf_operations.create_variable(component, variable, value)
+    return redirect(url_for('variables'))
