@@ -31,26 +31,30 @@ def choose_passfile():
 
 
 def check_SA():
-    SAs = []
+    statuses = ['started', 'stopped', 'shutdown']
+    ServAs = {}
     passfile = choose_passfile()
-    asadmin_command = subprocess.Popen\
-        (
-            [
-                "asadmin", "list-jbi-service-assemblies",
-                "--host", session.get('host'),
-                "--port", session.get('port'),
-                "--user", "admin",
-                "--passwordfile", passfile
-            ], stdout=subprocess.PIPE, shell=True
-        )
-    for line in asadmin_command.stdout:
-        if "executed successfully." not in str(line):
-            SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
-            SAs.append(SA)
-    return SAs
+    for status in statuses:
+        asadmin_command = subprocess.Popen\
+            (
+                [
+                    "asadmin", "list-jbi-service-assemblies",
+                    "--host", session.get('host'),
+                    "--port", session.get('port'),
+                    "--user", "admin",
+                    "--passwordfile", passfile,
+                    "--lifecyclestate", status
+                ], stdout=subprocess.PIPE, shell=True
+            )
+        for line in asadmin_command.stdout:
+            if "executed successfully." not in str(line):
+                SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
+                ServAs.update({SA: status})
+    return ServAs
 
 
 def undeploy_SA(SA):
+    result = ""
     passfile = choose_passfile()
     asadmin_command = subprocess.Popen\
         (
@@ -65,12 +69,25 @@ def undeploy_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "executed successfully" in str(line):
-            return "Success"
+            result = "Success"
         else:
-            return str(line).replace("\\r\\n\'", "").replace("b\'", "")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+    return result
 
 
 def deploy_SA(host, port, zip):
+    out = []
+
+
+def stop_SA(SA):
+    out = []
+
+
+def start_SA(SA):
+    out = []
+
+
+def shutdown_SA(SA):
     out = []
 
 
@@ -94,7 +111,7 @@ def get_all_variables():
                 variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")
                 if variable not in exists_variables:
                     exists_variables.append(variable)
-        return exists_variables
+    return exists_variables
 
 
 def update_variable(component, variable, value):
@@ -136,10 +153,10 @@ def create_variable(component, variable, value):
             ], stdout=subprocess.PIPE, shell=True
         )
     for line in asadmin_command.stdout:
-            if "executed successfully" in str(line):
-                result = "Success"
-            else:
-                result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
+        if "executed successfully" in str(line):
+            result = "Success"
+        else:
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 

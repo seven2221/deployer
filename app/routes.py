@@ -17,6 +17,7 @@ from app.config import Config
 
 class result(object):
     result = ""
+    undeploy_result = ""
 
 
 @app.route('/')
@@ -143,8 +144,30 @@ def create_variable():
 @app.route('/undeploy_SA', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def undeploy_SA():
-    component = request.form['component']
-    variable = request.form['variable']
-    value = request.form['value']
-    result.result = gf_operations.create_variable(component, variable, value)
-    return redirect(url_for('variables'))
+    SA = request.form['SA']
+    result.undeploy_result = gf_operations.undeploy_SA(SA)
+    return redirect(url_for('SA_menu'))
+
+
+@app.route('/stop_SA', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def stop_SA():
+    SA = request.form['SA']
+    result.undeploy_result = gf_operations.stop_SA(SA)
+    return redirect(url_for('SA_menu'))
+
+
+@app.route('/shutdown_SA', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def shutdown_SA():
+    SA = request.form['SA']
+    result.undeploy_result = gf_operations.shutdown_SA(SA)
+    return redirect(url_for('SA_menu'))
+
+
+@app.route('/start_SA', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def start_SA():
+    SA = request.form['SA']
+    result.undeploy_result = gf_operations.start_SA(SA)
+    return redirect(url_for('SA_menu'))
