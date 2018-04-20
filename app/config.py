@@ -4,7 +4,7 @@ import os
 
 class Config(object):
 
-    host = "10.127.242.216"
+    host = "10.127.242.208"
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'glassfish123'
 

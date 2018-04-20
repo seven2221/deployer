@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 from flask import render_template, session, redirect, url_for, request
 from app import app, file_operations, gf_operations, gf_variables
 from app.forms import HostForm, ZipForm
@@ -14,6 +13,10 @@ from app.config import Config
 # from app.gf_operations import check_variables
 # from flask_login import current_user, login_user, logout_user, login_required
 # from werkzeug.urls import url_parse
+
+
+class result(object):
+    result = ""
 
 
 @app.route('/')
@@ -69,10 +72,6 @@ def index():
 #     return redirect(url_for('login'))
 
 
-class result(object):
-    result = ""
-
-
 @app.route('/check_prepare', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def check_prepare():
@@ -123,23 +122,27 @@ def clean_session():
 @app.route('/unpack', methods=['POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def unpack():
+    session['zip'] = ""
+    file_operations.deleter(Config.tempdir)
     zip_to_unpack = request.form['zip_to_unpack']
     session['zip'] = zip_to_unpack
     file_operations.unpack_zip(zip_to_unpack)
     return redirect(url_for('check_prepare'))
 
 
-@app.route('/clear_temp', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def clear_temp():
-    session.pop('zip')
-    file_operations.deleter(Config.tempdir)
-    return redirect(url_for('check_prepare'))
-
-
 @app.route('/create_variable', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def create_variable():
+    component = request.form['component']
+    variable = request.form['variable']
+    value = request.form['value']
+    result.result = gf_operations.create_variable(component, variable, value)
+    return redirect(url_for('variables'))
+
+
+@app.route('/undeploy_SA', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def undeploy_SA():
     component = request.form['component']
     variable = request.form['variable']
     value = request.form['value']
