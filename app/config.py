@@ -10,14 +10,15 @@ class Config(object):
 
     GFcomponents = ['sun-bpel-engine', 'sun-http-binding', 'sun-jms-binding', 'sun-database-binding', 'sun-file-binding', 'sun-ftp-binding', 'sun-scheduler-binding']
 
-    path = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
-    zippath = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
-    logpath = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\logs_of_some_shit\\"
-    tempdir = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\temp\\"
+    home = "C:\\Users\\IOnoshko\\Documents\\Test\\deployer_home\\"
+    # path = "C:\\Users\\IOnoshko\\Documents\\Test\\deploy\\"
+    zippath = home + "zipfiles\\"
+    logpath = home + "logs\\"
+    tempdir = home + "temp\\"
 
-    passfile = "D:\\Glassfish22\\passfile"
-    passfile_test1 = "D:\\Glassfish22\\passfile_test"
-    passfile_test2 = "D:\\Glassfish22\\passfile_test2"
+    passfile = home + "passfiles\\passfile"
+    passfile_test1 = home + "passfiles\\passfile_test"
+    passfile_test2 = home + "passfiles\\passfile_test2"
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://glassfish:kem7Hdowm8d@ms-glass012/deployer'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

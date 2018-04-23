@@ -47,7 +47,7 @@ def check_SA():
                 ], stdout=subprocess.PIPE, shell=True
             )
         for line in asadmin_command.stdout:
-            if "executed successfully." not in str(line):
+            if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
                 SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
                 SAs.update({SA: status})
     return SAs
@@ -64,11 +64,11 @@ def undeploy_SA(SA):
                 "--port", session.get('port'),
                 "--user", "admin",
                 "--passwordfile", passfile,
-                "--target", SA
+                SA
             ], stdout=subprocess.PIPE, shell=True
         )
     for line in asadmin_command.stdout:
-        if "executed successfully" in str(line):
+        if "Undeployed service assembly" in str(line):
             result = "Success"
         else:
             result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")

@@ -2,7 +2,7 @@
 
 {% block content %}
     <form>
-        <b>Сборки в директории:</b><Br>
+        <b>Сборки в директории {{ zippath }}:</b><Br>
         {% for item in sborki %}
         <input type="radio" name="sborka">{{ item }}<Br>
         {% endfor %}

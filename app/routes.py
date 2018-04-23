@@ -15,9 +15,14 @@ from app.config import Config
 # from werkzeug.urls import url_parse
 
 
-class result(object):
-    result = ""
+class results(object):
+    add_var_result = ""
+    add_conf_result = ""
+    update_var_result = ""
+    update_conf_result = ""
+    SA_result = ""
     undeploy_result = ""
+    deploy_result = ""
 
 
 @app.route('/')
@@ -25,12 +30,17 @@ class result(object):
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def index():
     current_url = "http://" + Config.host + ":5000/index"
-    sborki = file_operations.match_selection(Config.path, "*zip")
     form = HostForm()
     if form.validate_on_submit():
         session['host'] = form.host.data
         session['port'] = form.port.data
-    return render_template('index.html', form=form, title='Home', current_url=current_url, sborki=sborki)
+    return render_template('index.html', form=form, title='Home', current_url=current_url)
+
+
+@app.route('/readme', methods=['GET'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def readme():
+    return render_template('readme.html')
 
 
 ##########  раскомментить если потребуется авторизация  ##########
@@ -77,25 +87,23 @@ def index():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def check_prepare():
     form = ZipForm()
-    sborki = file_operations.match_selection(Config.path, "*zip")
+    sborki = file_operations.match_selection(Config.zippath, "*zip")
     return render_template('check_prepare.html', title='Variables', sborki=sborki, form=form)
 
 
 @app.route('/variables', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def variables():
-    sborki = file_operations.match_selection(Config.path, "*zip")
     host = session.get('host')
     variables = gf_variables.find_new_variables()
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, sborki=sborki,result=result.result)
+    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, result=results.add_var_result)
 
 
 @app.route('/configurations', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def configurations():
-    sborki = file_operations.match_selection(Config.path, "*zip")
-    return render_template('configurations.html', title='Configurations',  sborki=sborki)
+    return render_template('configurations.html', title='Configurations', result=results.add_conf_result)
 
 
 @app.route('/SA_menu', methods=['GET', 'POST'])
@@ -108,8 +116,8 @@ def SA_menu():
 @app.route('/deploy', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def deploy():
-    sborki = file_operations.match_selection(Config.path, "*zip")
-    return render_template('deploy.html', title='Deploy', sborki=sborki)
+    sborki = file_operations.match_selection(Config.zippath, "*zip")
+    return render_template('deploy.html', title='Deploy', sborki=sborki, zippath=Config.zippath)
 
 
 @app.route('/clean_session')
@@ -137,7 +145,7 @@ def create_variable():
     component = request.form['component']
     variable = request.form['variable']
     value = request.form['value']
-    result.result = gf_operations.create_variable(component, variable, value)
+    results.add_var_result = gf_operations.create_variable(component, variable, value)
     return redirect(url_for('variables'))
 
 
@@ -145,7 +153,7 @@ def create_variable():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def undeploy_SA():
     SA = request.form['SA']
-    result.undeploy_result = gf_operations.undeploy_SA(SA)
+    results.SA_result = gf_operations.undeploy_SA(SA)
     return redirect(url_for('SA_menu'))
 
 
@@ -153,7 +161,7 @@ def undeploy_SA():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def stop_SA():
     SA = request.form['SA']
-    result.undeploy_result = gf_operations.stop_SA(SA)
+    results.SA_result = gf_operations.stop_SA(SA)
     return redirect(url_for('SA_menu'))
 
 
@@ -161,7 +169,7 @@ def stop_SA():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def shutdown_SA():
     SA = request.form['SA']
-    result.undeploy_result = gf_operations.shutdown_SA(SA)
+    results.SA_result = gf_operations.shutdown_SA(SA)
     return redirect(url_for('SA_menu'))
 
 
@@ -169,5 +177,5 @@ def shutdown_SA():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def start_SA():
     SA = request.form['SA']
-    result.undeploy_result = gf_operations.start_SA(SA)
+    results.SA_result = gf_operations.start_SA(SA)
     return redirect(url_for('SA_menu'))
