@@ -52,7 +52,7 @@ def check_SA():
                 SAs.update({SA: status})
     return SAs
 
-
+# TODO поправить шаблоны
 def undeploy_SA(SA):
     result = ""
     passfile = choose_passfile()
@@ -80,16 +80,69 @@ def deploy_SA(host, port, zip):
 
 
 def stop_SA(SA):
-    out = []
+    result = ""
+    passfile = choose_passfile()
+    asadmin_command = subprocess.Popen\
+        (
+            [
+                "asadmin", "stop-jbi-service-assembly",
+                "--host", session.get('host'),
+                "--port", session.get('port'),
+                "--user", "admin",
+                "--passwordfile", passfile,
+                SA
+            ], stdout=subprocess.PIPE, shell=True
+        )
+    for line in asadmin_command.stdout:
+        if "Stopped service assembly" in str(line):
+            result = "Success"
+        else:
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+    return result
 
 
 def start_SA(SA):
-    out = []
+    result = ""
+    passfile = choose_passfile()
+    asadmin_command = subprocess.Popen\
+        (
+            [
+                "asadmin", "start-jbi-service-assembly",
+                "--host", session.get('host'),
+                "--port", session.get('port'),
+                "--user", "admin",
+                "--passwordfile", passfile,
+                SA
+            ], stdout=subprocess.PIPE, shell=True
+        )
+    for line in asadmin_command.stdout:
+        if "Started service assembly" in str(line):
+            result = "Success"
+        else:
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+    return result
 
 
 def shutdown_SA(SA):
-    out = []
-
+    result = ""
+    passfile = choose_passfile()
+    asadmin_command = subprocess.Popen\
+        (
+            [
+                "asadmin", "shut-down-jbi-service-assembly",
+                "--host", session.get('host'),
+                "--port", session.get('port'),
+                "--user", "admin",
+                "--passwordfile", passfile,
+                SA
+            ], stdout=subprocess.PIPE, shell=True
+        )
+    for line in asadmin_command.stdout:
+        if "Shut Down service assembly" in str(line):
+            result = "Success"
+        else:
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+    return result
 
 def get_all_variables():
     exists_variables = []
