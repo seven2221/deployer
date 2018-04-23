@@ -3,7 +3,7 @@
 {% block content %}
     <table border="1" cellpadding="4" cellspacing="0">
 
-        <caption style="text-align: center; caption-side: top;">Новые переменные ({{ session.get('host') }})</caption>
+        <caption style="text-align: center; caption-side: top;">Новые переменные ({{ session.get('host') }}:{{ session.get('port') }})</caption>
 
         <tr>
             <th>Variable</th>

@@ -1,62 +1,59 @@
 {% extends "base.html" %}
-
 {% block content %}
-
     <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('deploy') }}'">Deploy New</button><br><br>
-
     <fieldset>
         <legend><b> Service-Assemblies on {{ session.get('host') }}:{{ session.get('port') }} </b></legend>
-
-{#        <table border="3" cellpadding="4" cellspacing="0">#}
-{#        <table border="1">#}
-    <table>
-{#            <tr>#}
-{#                <th>SA</th>#}
-{#                <th>Status</th>#}
-{#            </tr>#}
-
+        <table>
             {% for SA in SAs %}
-            <tr>
-                <td>
-                    <span> {{ SA }} </span>
-                </td>
-
-                <td>
-                    <span> {{ SAs[SA] }} </span>
-                </td>
-
-                <td>
-                    <form action={{ url_for('start_SA') }} method="post">
-                        <input name="SA" style="display:none" value="{{ SA }}">
-                        <input type="submit" value="start" style="margin-bottom: -15px">
-                    </form>
-                </td>
-
-                <td>
-                    <form action={{ url_for('stop_SA') }} method="post">
-                        <input name="SA" style="display:none" value="{{ SA }}">
-                        <input type="submit" value="stop" style="margin-bottom: -15px">
-                    </form>
-                </td>
-
-                <td>
-                    <form action={{ url_for('shutdown_SA') }} method="post">
-                        <input name="SA" style="display:none" value="{{ SA }}">
-                        <input type="submit" value="shutdown" style="margin-bottom: -15px">
-                    </form>
-                </td>
-
-                <td>
-                    <form action={{ url_for('undeploy_SA') }} method="post">
-                        <input name="SA" style="display:none" value="{{ SA }}">
-                        <input type="submit" value="undeploy" style="margin-bottom: -15px">
-                    </form>
-                </td>
-            </tr>
+                <tr>
+                    <td style="width:350px">
+                        <span> {{ SA }} </span>
+                    </td>
+                    <td style="width:150px">
+                        <span> {{ SAs[SA] }} </span>
+                    </td>
+                    {% if SAs[SA] == "started" %}
+                        <td>
+                            <form action={{ url_for('stop_SA') }} method="post">
+                                <input name="SA" style="display:none" value="{{ SA }}">
+                                <input type="submit" value="stop" size="7" style="margin-bottom: -15px; width:100px; background: #798eff">
+                            </form>
+                        </td>
+                        <td>
+                            <form action={{ url_for('shutdown_SA') }} method="post">
+                                <input name="SA" style="display:none" value="{{ SA }}">
+                                <input type="submit" value="shutdown" size="7" style="margin-bottom: -15px; width:100px; background: #ff9487">
+                            </form>
+                        </td>
+                    {% elif SAs[SA] == "stopped" %}
+                        <td>
+                            <form action={{ url_for('start_SA') }} method="post">
+                                <input name="SA" style="display:none" value="{{ SA }}">
+                                <input type="submit" value="start" style="margin-bottom: -15px; width:100px; background: #6bff3d">
+                            </form>
+                        </td>
+                        <td>
+                            <form action={{ url_for('shutdown_SA') }} method="post">
+                                <input name="SA" style="display:none" value="{{ SA }}">
+                                <input type="submit" value="shutdown" style="margin-bottom: -15px; width:100px; background: #ff9487">
+                            </form>
+                        </td>
+                    {% else %}
+                        <td colspan="2">
+                            <form action={{ url_for('start_SA') }} method="post">
+                                <input name="SA" style="display:none" value="{{ SA }}">
+                                <input type="submit" value="start" style="margin-bottom: -15px; width:205px; background: #6bff3d">
+                            </form>
+                        </td>
+                    {% endif %}
+                    <td>
+                        <form action={{ url_for('undeploy_SA') }} method="post">
+                            <input name="SA" style="display:none" value="{{ SA }}">
+                            <input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px">
+                        </form>
+                    </td>
+                </tr>
             {% endfor %}
-
         </table>
-
     </fieldset>
-
 {% endblock %}

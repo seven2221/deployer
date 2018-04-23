@@ -32,7 +32,7 @@ def choose_passfile():
 
 def check_SA():
     statuses = ['started', 'stopped', 'shutdown']
-    ServAs = {}
+    SAs = {}
     passfile = choose_passfile()
     for status in statuses:
         asadmin_command = subprocess.Popen\
@@ -49,8 +49,8 @@ def check_SA():
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line):
                 SA = str(line).replace("b\'", "").replace("\\r\\n\'", "")
-                ServAs.update({SA: status})
-    return ServAs
+                SAs.update({SA: status})
+    return SAs
 
 
 def undeploy_SA(SA):
