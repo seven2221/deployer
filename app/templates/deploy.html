@@ -1,12 +1,18 @@
 {% extends "base.html" %}
-
 {% block content %}
-    <form>
-        <b>Сборки в директории {{ zippath }}:</b><Br>
-        {% for item in sborki %}
-        <input type="radio" name="sborka">{{ item }}<Br>
-        {% endfor %}
-    </form>
-    <input type="submit" value="Deploy">
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('SA_menu') }}'">Back</button>
+    <span> Last result: {{ result }} </span>
+    <Br><Br>
+    <fieldset>
+        <legend><b> Zips in path {{ zippath }}: </b></legend>
+        <Br>
+        <form action={{ url_for('deploy_SA') }} method="post">
+            {% for item in sborki %}
+                <input type="radio" name="zip" value="{{ item }}">{{ item }}<Br>
+            {% endfor %}
+            <Br>
+            <input style="background: #fc0" type="submit" value="Deploy">
+        </form>
+    </fieldset>
+    <Br>
+    <button style="display: table-cell; width: 100px; margin-right: 15px;  background: #fc0" onclick="window.location.href='{{ url_for('SA_menu') }}'">Back</button>
 {% endblock %}

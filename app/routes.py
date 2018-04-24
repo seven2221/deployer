@@ -121,7 +121,7 @@ def SA_menu():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def deploy():
     sborki = file_operations.match_selection(Config.zippath, "*zip")
-    return render_template('deploy.html', title='Deploy', sborki=sborki, zippath=Config.zippath)
+    return render_template('deploy.html', title='Deploy', sborki=sborki, zippath=Config.zippath, result=results.deploy_result)
 
 
 @app.route('/clean_session')
@@ -153,6 +153,14 @@ def create_variable():
     results.last_added_variable = variable
     results.last_used_component = component
     return redirect(url_for('variables'))
+
+
+@app.route('/deploy_SA', methods=['GET', 'POST'])
+# @login_required   ##########  раскомментить если потребуется авторизация  ##########
+def deploy_SA():
+    zip = request.form['zip']
+    results.deploy_result = gf_operations.deploy_SA(zip)
+    return redirect(url_for('deploy'))
 
 
 @app.route('/undeploy_SA', methods=['GET', 'POST'])

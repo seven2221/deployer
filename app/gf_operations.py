@@ -69,14 +69,32 @@ def undeploy_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "Undeployed service assembly" in str(line):
-            result = SA + " is successfully undeployed"
+            result = SA + " is successfully undeployed from " + session.get('host')
         else:
             result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 
-def deploy_SA(host, port, zip):
-    out = []
+def deploy_SA(zip):
+    result = ""
+    passfile = choose_passfile()
+    asadmin_command = subprocess.Popen\
+        (
+            [
+                "asadmin", "deploy-jbi-service-assembly",
+                "--host", session.get('host'),
+                "--port", session.get('port'),
+                "--user", "admin",
+                "--passwordfile", passfile,
+                Config.zippath + zip
+            ], stdout=subprocess.PIPE, shell=True
+        )
+    for line in asadmin_command.stdout:
+        if "executed successfully" in str(line):
+            result = zip + " is successfully deployed on " + session.get('host')
+        else:
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
+    return result
 
 
 def stop_SA(SA):
@@ -161,7 +179,7 @@ def get_all_variables():
             )
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
-                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")
+                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
                 if variable not in exists_variables:
                     exists_variables.append(variable)
     return exists_variables
@@ -186,7 +204,7 @@ def update_variable(component, variable, value):
         if "executed successfully" in str(line):
             result = "Success"
         else:
-            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 

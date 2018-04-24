@@ -8,7 +8,7 @@
         <table>
             {% for SA in SAs %}
 				{% if SAs[SA] == "started" %}
-					<tr style="background: #3effb1">
+					<tr style="background: #ffdb65">
 						<td style="width:350px; color:black">
 							<span> {{ SA }} </span>
 						</td>
@@ -18,19 +18,19 @@
 						<td>
 							<form action={{ url_for('stop_SA') }} method="post">
 								<input name="SA" style="display:none" value="{{ SA }}">
-								<input type="submit" value="stop" size="7" style="margin-bottom: -15px; width:100px; background: #798eff">
+								<input type="submit" value="stop" size="7" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
 							</form>
 						</td>
 						<td>
 							<form action={{ url_for('shutdown_SA') }} method="post">
 								<input name="SA" style="display:none" value="{{ SA }}">
-								<input type="submit" value="shutdown" size="7" style="margin-bottom: -15px; width:100px; background: #ff9487">
+								<input type="submit" value="shutdown" size="7" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
 							</form>
 						</td>
 						<td>
 							<form action={{ url_for('undeploy_SA') }} method="post">
 								<input name="SA" style="display:none" value="{{ SA }}">
-								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #fc0">
+								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
 							</form>
 						</td>
 					</tr>
@@ -45,19 +45,19 @@
                         <td>
                             <form action={{ url_for('start_SA') }} method="post">
                                 <input name="SA" style="display:none" value="{{ SA }}">
-                                <input type="submit" value="start" style="margin-bottom: -15px; width:100px; background: #3effb1">
+                                <input type="submit" value="start" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
                             </form>
                         </td>
                         <td>
                             <form action={{ url_for('shutdown_SA') }} method="post">
                                 <input name="SA" style="display:none" value="{{ SA }}">
-                                <input type="submit" value="shutdown" style="margin-bottom: -15px; width:100px; background: #ff9487">
+                                <input type="submit" value="shutdown" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
                             </form>
                         </td>
 						<td>
 							<form action={{ url_for('undeploy_SA') }} method="post">
 								<input name="SA" style="display:none" value="{{ SA }}">
-								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #fc0">
+								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
 							</form>
 						</td>
 					</tr>
@@ -72,13 +72,13 @@
                         <td colspan="2">
                             <form action={{ url_for('start_SA') }} method="post">
                                 <input name="SA" style="display:none" value="{{ SA }}">
-                                <input type="submit" value="start" style="margin-bottom: -15px; width:205px; background: #3effb1">
+                                <input type="submit" value="start" style="margin-bottom: -15px; width:205px; background: #4a4a4a; color: #fc0">
                             </form>
                         </td>
 						<td>
 							<form action={{ url_for('undeploy_SA') }} method="post">
 								<input name="SA" style="display:none" value="{{ SA }}">
-								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #fc0">
+								<input type="submit" value="undeploy" style="margin-bottom: -15px; width:100px; background: #4a4a4a; color: #fc0">
 							</form>
 						</td>
 					</tr>
