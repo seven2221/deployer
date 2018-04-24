@@ -1,5 +1,4 @@
 {#<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">#}
-
 <html>
     <head>
         {% if title %}
@@ -8,13 +7,13 @@
         <title>Deployer</title>
         {% endif %}
     </head>
-    <body>
+    <body style="background: #333; color: #fc0;">
         <span>Current host is {{ session.get('host') }}:{{ session.get('port') }}</span><br>
         <span>Last unpacked zip: {{ session.get('zip') }}</span>
         <div style="width: 100%">
 {#            <span>Текущий пользователь: {{ user.username }}</span>#}
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('readme') }}">Readme</a>
+            <a href="{{ url_for('index') }}" style="color: #fc0">Home</a>
+            <a href="{{ url_for('readme') }}" style="color: #fc0">Readme</a>
 
 {#            ##########  раскомментить если потребуется авторизация  ##########        #}
 {#            {% if current_user.is_anonymous %}#}

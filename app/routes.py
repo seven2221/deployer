@@ -23,6 +23,9 @@ class results(object):
     SA_result = ""
     undeploy_result = ""
     deploy_result = ""
+    last_used_component = ""
+    last_added_variable = ""
+    last_added_config = ""
 
 
 @app.route('/')
@@ -97,7 +100,7 @@ def variables():
     host = session.get('host')
     variables = gf_variables.find_new_variables()
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, result=results.add_var_result)
+    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, result=results.add_var_result, last_var=results.last_added_variable, last_comp=results.last_used_component)
 
 
 @app.route('/configurations', methods=['GET', 'POST'])
@@ -110,7 +113,8 @@ def configurations():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def SA_menu():
     SAs = gf_operations.check_SA()
-    return render_template('SA_menu.html', title='SA_menu', SAs=SAs)
+    result = results.SA_result
+    return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
 
 
 @app.route('/deploy', methods=['GET', 'POST'])
@@ -146,6 +150,8 @@ def create_variable():
     variable = request.form['variable']
     value = request.form['value']
     results.add_var_result = gf_operations.create_variable(component, variable, value)
+    results.last_added_variable = variable
+    results.last_used_component = component
     return redirect(url_for('variables'))
 
 

@@ -1,16 +1,12 @@
 {% extends "base.html" %}
-
 {% block content %}
     <table border="1" cellpadding="4" cellspacing="0">
-
         <caption style="text-align: center; caption-side: top;">Новые переменные ({{ session.get('host') }}:{{ session.get('port') }})</caption>
-
         <tr>
             <th>Variable</th>
             <th>Component</th>
             <th>Value</th>
         </tr>
-
         {% for var in vars %}
             <form action={{ url_for('create_variable') }} method="post">
                 <tr>
@@ -19,35 +15,36 @@
                         <input name="variable" style="display:none" value="{{ var }}">
                     </td>
                     <td>
-                        <select name="component" class="selectpicker form-control">
+                        <select style="background: #4a4a4a; color: #fc0" name="component" class="selectpicker form-control">
                             {% for comp in comps %}
                                 <option  value="{{ comp }}"> {{ comp }} </option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td><input name="value" type="text" size="40"></td>
-                    <td><input type="submit" value="Добавить"></td>
+                    <td><input style="background: #4a4a4a; color: #fc0" name="value" type="text" size="40"></td>
+                    <td><input style="background: #fc0" type="submit" value="Добавить"></td>
                 </tr>
             </form>
         {% endfor %}
-
         <form action={{ url_for('create_variable') }} method="post">
             <tr>
-                <td><input name="variable" type="text" size="40"></td>
+                <td><input style="background: #4a4a4a; color: #fc0" name="variable" type="text" size="40"></td>
                 <td>
-                    <select name="component" class="selectpicker form-control">
+                    <select style="background: #4a4a4a; color: #fc0" name="component" class="selectpicker form-control">
                         {% for comp in comps %}
                             <option  value="{{ comp }}"> {{ comp }} </option>
                         {% endfor %}
                     </select>
                 </td>
-                <td><input name="value" type="text" size="40"></td>
-                <td><input type="submit" value="Добавить"></td>
+                <td><input style="background: #4a4a4a; color: #fc0" name="value" type="text" size="40"></td>
+                <td><input style="background: #fc0" type="submit" value="Добавить"></td>
             </tr>
         </form>
-
     </table>
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Back </button>
-    <span>   Last result is: {{ result }}</span>
-
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Back </button>
+    {% if result == "Success" %}
+        <span>   Variable  {{ last_var }}  is successfully created for {{ last_comp }} </span>
+    {% else %}
+        <span>   Last result is: {{ result }}</span>
+    {% endif %}
 {% endblock %}

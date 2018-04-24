@@ -1,36 +1,29 @@
 {% extends "base.html" %}
-
 {% block content %}
     <form action={{ current_url }} method="post">
-
         {{ form.hidden_tag() }}
-
         <div style="display: table">
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.host.label }}</span>
-                {{ form.host(size=20) }}
+                <span style="background: #4a4a4a; color: #fc0">{{ form.host(size=20) }}</span>
 {#                обработка ошибок                   #}
 {#                {% for error in form.host.errors %}#}
 {#                    <span style="color: red;">[{{ error }}]</span>#}
 {#                {% endfor %}#}
             </div>
-
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.port.label }}</span>
-                {{ form.port(size=15) }}
+                <span style="background: #4a4a4a; color: #fc0">{{ form.port(size=15) }}</span>
 {#                обработка ошибок                   #}
 {#                {% for error in form.port.errors %}#}
 {#                    <span style="color: red;">[{{ error }}]</span>#}
 {#                {% endfor %}#}
-                <span>{{ form.submit() }}</span>
+                <span style="background: #fc0">{{ form.submit() }}</span>
             </div>
-
-            <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('clean_session') }}'">Clean Session</button>
+            <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('clean_session') }}'">Clean Session</button>
         </div>
     </form>
-
     <Br>
-
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('SA_menu') }}'"> Service-Assemblies Menu </button>
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Check changes </button>
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('SA_menu') }}'"> Service-Assemblies Menu </button>
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Check changes </button>
 {% endblock %}

@@ -52,7 +52,7 @@ def check_SA():
                 SAs.update({SA: status})
     return SAs
 
-# TODO поправить шаблоны
+
 def undeploy_SA(SA):
     result = ""
     passfile = choose_passfile()
@@ -69,9 +69,9 @@ def undeploy_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "Undeployed service assembly" in str(line):
-            result = "Success"
+            result = SA + " is successfully undeployed"
         else:
-            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 
@@ -95,9 +95,9 @@ def stop_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "Stopped service assembly" in str(line):
-            result = "Success"
+            result = SA + " is successfully stopped"
         else:
-            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 
@@ -117,9 +117,9 @@ def start_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "Started service assembly" in str(line):
-            result = "Success"
+            result = SA + " is successfully started"
         else:
-            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 
@@ -139,9 +139,9 @@ def shutdown_SA(SA):
         )
     for line in asadmin_command.stdout:
         if "Shut Down service assembly" in str(line):
-            result = "Success"
+            result = SA + " is successfully shutted down"
         else:
-            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n","")
+            result = result + str(line).replace("\\r\\n\'", "").replace("b\'", "").replace("\n", "")
     return result
 
 def get_all_variables():

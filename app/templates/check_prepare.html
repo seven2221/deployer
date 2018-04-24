@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block content %}
-
     <fieldset>
         <legend>Выбор сборки для проверки новых переменных:</legend>
         <form action={{ url_for('unpack') }} method="post">
@@ -10,11 +8,9 @@
                 <input type="radio" name="zip_to_unpack" id="{{ item }}" value="{{ item }}" /> {{ item }}  <br/>
             {% endfor %}
             <br/>
-            <input type="submit" value=" Unpack chosen ">
+            <input style="background: #fc0" type="submit" value=" Unpack chosen ">
         </form>
     </fieldset>
-
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('variables') }}'"> Check for new variables </button>
-    <button style="display: table-cell; margin-right: 15px" onclick="window.location.href='{{ url_for('configurations') }}'"> Check for new configurations </button>
-
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('variables') }}'"> Check for new variables </button>
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('configurations') }}'"> Check for new configurations </button>
 {% endblock %}
