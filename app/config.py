@@ -4,7 +4,7 @@ import os
 
 class Config(object):
 
-    host = "10.127.242.202"
+    host = "10.127.242.188"
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'glassfish123'
 
@@ -18,6 +18,7 @@ class Config(object):
     passfile = home + "passfiles\\passfile"
     passfile_test1 = home + "passfiles\\passfile_test"
     passfile_test2 = home + "passfiles\\passfile_test2"
+    passfile_test3 = home + "passfiles\\passfile_test3"
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://glassfish:kem7Hdowm8d@ms-glass012/deployer'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

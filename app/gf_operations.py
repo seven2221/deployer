@@ -19,9 +19,11 @@ from flask import session
 def choose_passfile():
     host = session.get('host')
     port = session.get('port')
-    testhosts = ['ms-glass004', 'ms-glass006', 'ms-glass018', 'dr-glass016']
+    testhosts = ['ms-glass004', 'ms-glass006', 'ms-glass018', 'dr-glass016', 'ms-glass017']
     if host == "ms-glass004" and port == "7000":
         passfile = Config.passfile_test2
+    elif host == "ms-glass028":
+        passfile = Config.passfile_test3
     else:
         if host in testhosts:
             passfile = Config.passfile_test1
