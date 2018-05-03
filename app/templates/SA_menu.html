@@ -8,9 +8,9 @@
         <form action={{ url_for('SA_menu') }} method="post">
 		    <table>
                 <tr>
-                    <td><input type="submit" value="start" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
-                    <td><input type="submit" value="stop" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
-                    <td><input type="submit" value="shutdown" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
+                    <td><input type="submit" name = "action" value="start" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
+                    <td><input type="submit" name = "action" value="stop" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
+                    <td><input type="submit" name = "action" value="shutdown" size="10" style="width:100px; background: #4a4a4a; color: #fc0"></td>
                 </tr>
 			</table>
             <br>
@@ -19,7 +19,7 @@
                     {% if SAs[SA] == "started" %}
                         <tr>
                             <td>
-                                <input type="checkbox" name="SAs[]" value="{{ SA }}">
+                                <input type="checkbox" name="SAs" value="{{ SA }}">
                             </td>
                             <td style="width:350px; color: #fc0">
                                 <span> {{ SA }} </span>
@@ -31,7 +31,7 @@
                     {% elif SAs[SA] == "stopped" %}
                         <tr style="background: #16171f">
                             <td>
-                                <input type="checkbox" name="SAs[]" value="{{ SA }}">
+                                <input type="checkbox" name="SAs" value="{{ SA }}">
                             </td>
                             <td style="width:350px; color: #fc0">
                                 <span> {{ SA }} </span>
@@ -43,7 +43,7 @@
                     {% else %}
                         <tr style="background: #390406">
                             <td>
-                                <input type="checkbox" name="SAs[]" value="{{ SA }}">
+                                <input type="checkbox" name="SAs" value="{{ SA }}">
                             </td>
                             <td style="width:350px; color: #fc0">
                                 <span> {{ SA }} </span>

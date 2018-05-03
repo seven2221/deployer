@@ -112,17 +112,20 @@ def configurations():
 @app.route('/SA_menu', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def SA_menu():
+    SA_to_use = request.form.getlist('SAs')
     if request.method == 'POST':
-        SA_to_use = []
-        SA_to_use = SA_to_use + request.form['SAs']
-        if len(SA_to_use) > 0:
+        if request.form['action'] == 'start':
             for SA in SA_to_use:
-                print(SA)
-        if len(request.form['SAs']) > 0:
-            for SA in request.form['SAs']:
-                print(SA)
+                results.SA_result = gf_operations.start_SA(SA)
+                # print("start shit named " + SA)
+        elif request.form['action'] == 'stop':
+            for SA in SA_to_use:
+                results.SA_result = gf_operations.stop_SA(SA)
+                # print("stop shit " + SA)
         else:
-            print(request.form['SA'])
+            for SA in SA_to_use:
+                results.SA_result = gf_operations.shutdown_SA(SA)
+                # print("shutdown shit " + SA)
         SAs = gf_operations.check_SA()
         result = results.SA_result
         return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
