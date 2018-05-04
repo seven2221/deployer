@@ -4,7 +4,7 @@ from flask import session
 
 
 '''
- list-jbi-application-variables
+ list-jbi-application-variables         
  list-jbi-application-configurations
  list-jbi-service-assemblies
  update-jbi-application-variable

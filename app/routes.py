@@ -117,27 +117,28 @@ def SA_menu():
         if request.form['action'] == 'start':
             for SA in SA_to_use:
                 results.SA_result = gf_operations.start_SA(SA)
-                # print("start shit named " + SA)
         elif request.form['action'] == 'stop':
             for SA in SA_to_use:
                 results.SA_result = gf_operations.stop_SA(SA)
-                # print("stop shit " + SA)
-        else:
+        elif request.form['action'] == 'shutdown':
             for SA in SA_to_use:
                 results.SA_result = gf_operations.shutdown_SA(SA)
-                # print("shutdown shit " + SA)
-        SAs = gf_operations.check_SA()
-        result = results.SA_result
-        return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
-    else:
-        SAs = gf_operations.check_SA()
-        result = results.SA_result
-        return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
+        elif request.form['action'] == 'undeploy':
+            for SA in SA_to_use:
+                results.SA_result = gf_operations.undeploy_SA(SA)
+        else:
+            results.SA_result = "Wrong action"
+    SAs = gf_operations.check_SA()
+    result = results.SA_result
+    return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
 
 
 @app.route('/deploy', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def deploy():
+    if request.method == 'POST':
+        zip = request.form['zip']
+        results.deploy_result = gf_operations.deploy_SA(zip)
     sborki = file_operations.match_selection(Config.zippath, "*zip")
     return render_template('deploy.html', title='Deploy', sborki=sborki, zippath=Config.zippath, result=results.deploy_result)
 
@@ -173,51 +174,3 @@ def create_variable():
     return redirect(url_for('variables'))
 
 
-@app.route('/deploy_SA', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def deploy_SA():
-    zip = request.form['zip']
-    results.deploy_result = gf_operations.deploy_SA(zip)
-    return redirect(url_for('deploy'))
-
-
-@app.route('/undeploy_SA', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def undeploy_SA():
-    SA = request.form['SA']
-    results.SA_result = gf_operations.undeploy_SA(SA)
-    return redirect(url_for('SA_menu'))
-
-
-@app.route('/stop_SA', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def stop_SA():
-    SA = request.form['SA']
-    results.SA_result = gf_operations.stop_SA(SA)
-    return redirect(url_for('SA_menu'))
-
-
-@app.route('/shutdown_SA', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def shutdown_SA():
-    SA = request.form['SA']
-    results.SA_result = gf_operations.shutdown_SA(SA)
-    return redirect(url_for('SA_menu'))
-
-
-@app.route('/start_SA', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def start_SA():
-    SA = request.form['SA']
-    results.SA_result = gf_operations.start_SA(SA)
-    return redirect(url_for('SA_menu'))
-
-
-@app.route('/start_SAs', methods=['GET', 'POST'])
-# @login_required   ##########  раскомментить если потребуется авторизация  ##########
-def start_SAs():
-    SAs = request.form['SAs']
-    for SA in SAs:
-        print(SA)
-    # results.SA_result = gf_operations.start_SA(SA)
-    return redirect(url_for('SA_menu'))

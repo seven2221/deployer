@@ -5,7 +5,7 @@
     <fieldset>
         <legend><b> Zips in path {{ zippath }}: </b></legend>
         <Br>
-        <form action={{ url_for('deploy_SA') }} method="post">
+        <form action={{ url_for('deploy') }} method="post">
             {% for item in sborki %}
                 <input type="radio" name="zip" value="{{ item }}">{{ item }}<Br>
             {% endfor %}

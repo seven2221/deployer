@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
     <form action={{ current_url }} method="post">
-        {{ form.hidden_tag() }}
+        <span>{{ form.hidden_tag() }}</span>
         <div style="display: table">
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.host.label }}</span>
-                <span style="background: #4a4a4a; color: #fc0">{{ form.host(size=20) }}</span>
+                <span style="background: #4a4a4a; color: #fc0">{{ form.host(size=20, style=" background: #4a4a4a; color: #fc0") }}</span>
 {#                обработка ошибок                   #}
 {#                {% for error in form.host.errors %}#}
 {#                    <span style="color: red;">[{{ error }}]</span>#}
@@ -13,12 +13,12 @@
             </div>
             <div style="display: table-row">
                 <span style="display: table-cell; margin-right: 15px">{{ form.port.label }}</span>
-                <span style="background: #4a4a4a; color: #fc0">{{ form.port(size=15) }}</span>
+                <span style="background: #4a4a4a; color: #fc0">{{ form.port(size=15.5, style=" background: #4a4a4a; color: #fc0") }}</span>
 {#                обработка ошибок                   #}
 {#                {% for error in form.port.errors %}#}
 {#                    <span style="color: red;">[{{ error }}]</span>#}
 {#                {% endfor %}#}
-                <span style="background: #fc0">{{ form.submit() }}</span>
+                <span style="background: #fc0">{{ form.submit(style="background: #4a4a4a; color: #fc0") }}</span>
             </div>
             <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('clean_session') }}'">Clean Session</button>
         </div>
