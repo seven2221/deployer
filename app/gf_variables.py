@@ -13,7 +13,7 @@ def find_variables_in_zip():
             with zipfile.ZipFile(Config.tempdir + jarFile).open(filename) as opened_file:
                 for line in opened_file:
                     if "${" in str(line):
-                        variable = str(re.findall(r"\{([A-Za-z].*)\}", str(line))).replace("[\'", "").replace("\']", "")
+                        variable = str(re.findall(r"\{([A-Za-z].*)\}", str(line))[0]).replace("[\'", "").replace("\']", "").split("}")[0]
                         if variable not in zip_variables and variable != "HttpDefaultPort" and variable != "[]" and "\\" not in variable:
                             zip_variables.append(variable)
     return zip_variables

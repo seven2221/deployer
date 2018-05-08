@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <span>тут будет какая-то херня</span><Br>
-    <span>Last result: {{ result }}</span>
+
+    <table border="1" cellpadding="4" cellspacing="0">
+        <caption style="text-align: center; caption-side: top;">New configurations ({{ session.get('host') }}:{{ session.get('port') }})</caption>
+
+        <tr>
+            <th>Configuration</th>
+            <th>Component</th>
+            <th>Value</th>
+        </tr>
+
+        {% for conf in confs %}
+            <tr>conf</tr>
+        {% endfor %}
+    </table>
+
+    <button style="display: table-cell; margin-right: 15px; background: #fc0" onclick="window.location.href='{{ url_for('check_prepare') }}'"> Back </button>
+
+    {% if result == "Success" %}
+        <span>   Variable  {{ last_var }}  is successfully created for {{ last_comp }} </span>
+    {% else %}
+        <span>   Last result is: {{ result }}</span>
+    {% endif %}
 {% endblock %}

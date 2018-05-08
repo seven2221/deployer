@@ -13,6 +13,8 @@ from flask import session
  asadmin create-jbi-application-variable --host ms-glass004 --port 4848 --user admin --passwordfile D:\Glassfish22\passfile123 --component sun-bpel-engine test_variable=testtest
  asadmin create-jbi-application-variable --host hostname --port 4848 --user admin --passwordfile D:\Glassfish22\passfile --component sun-bpel-engine SubscriberSMConfigFileDir=D:\\Glassfish22\\domains\\domain1\\config\\SubscriberManagementService\\
  asadmin shut-down-jbi-service-assembly --user admin --host ms-glass010 --port 4848 --passwordfile D:\GlassFish22\passfile SharedDataWeb
+ asadmin list-jbi-application-configurations --host ms-glass004 --port 7000 --user admin --passwordfile D:\Glassfish22\passfile_test2 --component sun-jms-binding
+
  '''
 
 
@@ -233,9 +235,27 @@ def create_variable(component, variable, value):
     return result
 
 
-def get_all_configurations(cls):
+def get_all_configurations():
     exists_configurations = []
     passfile = choose_passfile()
+    for component in Config.GFcomponents:
+        asadmin_command = subprocess.Popen\
+            (
+                [
+                    "asadmin", "list-jbi-application-configurations",
+                    "--host", session.get('host'),
+                    "--port", session.get('port'),
+                    "--user", "admin",
+                    "--passwordfile", passfile,
+                    "--component", component
+                ], stdout=subprocess.PIPE, shell=True
+            )
+        for line in asadmin_command.stdout:
+            if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
+                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
+                if variable not in exists_configurations:
+                    exists_configurations.append(variable)
+    return exists_configurations
 
 
 def update_configuration(cls):

@@ -37,7 +37,13 @@ def index():
     if form.validate_on_submit():
         session['host'] = form.host.data
         session['port'] = form.port.data
-    return render_template('index.html', form=form, title='Home', current_url=current_url)
+    return render_template\
+        (
+            'index.html',
+            form=form,
+            title='Home',
+            current_url=current_url
+        )
 
 
 @app.route('/readme', methods=['GET'])
@@ -91,7 +97,13 @@ def readme():
 def check_prepare():
     form = ZipForm()
     sborki = file_operations.match_selection(Config.zippath, "*zip")
-    return render_template('check_prepare.html', title='Variables', sborki=sborki, form=form)
+    return render_template\
+        (
+            'check_prepare.html',
+            title='Variables',
+            sborki=sborki,
+            form=form
+        )
 
 
 @app.route('/variables', methods=['GET', 'POST'])
@@ -100,13 +112,36 @@ def variables():
     host = session.get('host')
     variables = gf_variables.find_new_variables()
     components = Config.GFcomponents
-    return render_template('variables.html', title='Variables', vars=variables, comps=components, host=host, result=results.add_var_result, last_var=results.last_added_variable, last_comp=results.last_used_component)
+    return render_template\
+        (
+            'variables.html',
+            title='Variables',
+            vars=variables,
+            comps=components,
+            host=host,
+            result=results.add_var_result,
+            last_var=results.last_added_variable,
+            last_comp=results.last_used_component
+        )
 
 
 @app.route('/configurations', methods=['GET', 'POST'])
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def configurations():
-    return render_template('configurations.html', title='Configurations', result=results.add_conf_result)
+    host = session.get('host')
+    configurations = gf_variables.find_new_variables()
+    components = Config.GFcomponents
+    return render_template\
+        (
+            'configurations.html',
+            title='Configurations',
+            confs=configurations,
+            comps=components,
+            host=host,
+            result=results.add_conf_result,
+            last_var=results.last_added_config,
+            last_comp=results.last_used_component
+        )
 
 
 @app.route('/SA_menu', methods=['GET', 'POST'])
@@ -130,7 +165,13 @@ def SA_menu():
             results.SA_result = "Wrong action"
     SAs = gf_operations.check_SA()
     result = results.SA_result
-    return render_template('SA_menu.html', title='SA_menu', SAs=SAs, result=result)
+    return render_template\
+        (
+            'SA_menu.html',
+            title='SA_menu',
+            SAs=SAs,
+            result=result
+        )
 
 
 @app.route('/deploy', methods=['GET', 'POST'])
@@ -140,7 +181,14 @@ def deploy():
         zip = request.form['zip']
         results.deploy_result = gf_operations.deploy_SA(zip)
     sborki = file_operations.match_selection(Config.zippath, "*zip")
-    return render_template('deploy.html', title='Deploy', sborki=sborki, zippath=Config.zippath, result=results.deploy_result)
+    return render_template\
+        (
+            'deploy.html',
+            title='Deploy',
+            sborki=sborki,
+            zippath=Config.zippath,
+            result=results.deploy_result
+        )
 
 
 @app.route('/clean_session')
