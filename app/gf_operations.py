@@ -252,7 +252,9 @@ def get_all_configurations():
             )
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
-                configuration = str(line)#.split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
+                print(str(line))
+                configuration = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\r\\n\'", "")
+                print(configuration)
                 if configuration not in exists_configurations:
                     exists_configurations.append(configuration)
     print(exists_configurations)

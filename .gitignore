@@ -4,3 +4,4 @@ log/
 *.log
 app/testfile*
 app/templates/testfile*
+qqq.txt
