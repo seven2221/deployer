@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, session, redirect, url_for, request
-from app import app, file_operations, gf_operations, gf_variables
+from app import app, file_operations, gf_operations, gf_variables, gf_configurations
 from app.forms import HostForm, ZipForm
 from app.config import Config
 
@@ -129,7 +129,7 @@ def variables():
 # @login_required   ##########  раскомментить если потребуется авторизация  ##########
 def configurations():
     host = session.get('host')
-    configurations = gf_variables.find_new_variables()
+    configurations = gf_configurations.find_new_configurations()
     components = Config.GFcomponents
     return render_template\
         (

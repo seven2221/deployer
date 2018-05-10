@@ -22,13 +22,15 @@
                         </select>
                     </td>
                     <td><input style="background: #4a4a4a; color: #fc0" name="value" type="text" size="40"></td>
-                    <td><input style="background: #fc0" type="submit" value="Добавить"></td>
+                    <td><input style="background: #fc0" type="submit" value="Add"></td>
                 </tr>
             </form>
         {% endfor %}
         <form action={{ url_for('create_variable') }} method="post">
             <tr>
-                <td><input style="background: #4a4a4a; color: #fc0" name="variable" type="text" size="40"></td>
+                <td>
+                    <input style="background: #4a4a4a; color: #fc0" name="variable" type="text" size="40">
+                </td>
                 <td>
                     <select style="background: #4a4a4a; color: #fc0" name="component" class="selectpicker form-control">
                         {% for comp in comps %}
@@ -36,8 +38,12 @@
                         {% endfor %}
                     </select>
                 </td>
-                <td><input style="background: #4a4a4a; color: #fc0" name="value" type="text" size="40"></td>
-                <td><input style="background: #fc0" type="submit" value="Добавить"></td>
+                <td>
+                    <input style="background: #4a4a4a; color: #fc0" name="value" type="text" size="40">
+                </td>
+                <td>
+                    <input style="background: #fc0" type="submit" value="Add">
+                </td>
             </tr>
         </form>
     </table>

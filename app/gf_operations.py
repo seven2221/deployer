@@ -183,7 +183,7 @@ def get_all_variables():
             )
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
-                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
+                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "")#.replace("\\xd0", "").replace("\\xa1", "")
                 if variable not in exists_variables:
                     exists_variables.append(variable)
     return exists_variables
@@ -252,9 +252,10 @@ def get_all_configurations():
             )
         for line in asadmin_command.stdout:
             if "executed successfully." not in str(line) and "Nothing to list" not in str(line):
-                variable = str(line).split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
-                if variable not in exists_configurations:
-                    exists_configurations.append(variable)
+                configuration = str(line)#.split("=")[0].replace("b\'", "").replace("b\"", "").replace(" ", "").replace("\\xd0", "").replace("\\xa1", "")
+                if configuration not in exists_configurations:
+                    exists_configurations.append(configuration)
+    print(exists_configurations)
     return exists_configurations
 
 

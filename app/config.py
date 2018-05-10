@@ -4,11 +4,12 @@ import os
 
 class Config(object):
 
-    host = "10.127.242.204"
+    host = "10.127.242.205"
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'glassfish123'
 
     GFcomponents = ['sun-bpel-engine', 'sun-http-binding', 'sun-jms-binding', 'sun-database-binding', 'sun-file-binding', 'sun-ftp-binding', 'sun-scheduler-binding']
+    GFVariables_types = ['string', 'boolean', 'number', 'password']
 
     home = "C:\\Users\\IOnoshko\\Documents\\Test\\deployer_home\\"
     zippath = home + "zipfiles\\"
